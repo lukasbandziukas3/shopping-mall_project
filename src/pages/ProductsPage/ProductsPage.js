@@ -1,8 +1,8 @@
-import { ProductsTable } from "../../components/products/ProductsTable";
+import { ProductsList } from "../../components/products/ProductsList";
 export function ProductsPage() {
   return (
     <div>
-      <ProductsTable />
+      <ProductsList />
     </div>
   );
 }

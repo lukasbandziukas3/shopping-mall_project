@@ -9,12 +9,22 @@ import {
 
 export function SelectCategory({ productCategory, setProductCategory }) {
   const catagories = useSelector((state) => state.categories.categories);
+
   return (
     <FormControl>
-      <InputLabel htmlFor="my-select">categories</InputLabel>
+      <InputLabel
+        sx={{
+          color: !productCategory ? "error.main" : "grey",
+        }}
+        id="category-select"
+      >
+        categories
+      </InputLabel>
       <Select
         autoWidth={true}
-        label="My Select"
+        label="Category select"
+        labelId="category-select"
+        error={!productCategory}
         value={productCategory}
         onChange={(event) => setProductCategory(event.target.value)}
       >
@@ -24,7 +34,9 @@ export function SelectCategory({ productCategory, setProductCategory }) {
           </MenuItem>
         ))}
       </Select>
-      <FormHelperText>Select category of product</FormHelperText>
+      <FormHelperText error={!productCategory}>
+        Select category of product
+      </FormHelperText>
     </FormControl>
   );
 }

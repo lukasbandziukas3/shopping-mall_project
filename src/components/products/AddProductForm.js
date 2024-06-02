@@ -12,8 +12,6 @@ export function AddProductForm({ isOpen, onClose }) {
   const [quantity, setQuantity] = useState(0);
   const [price, setPrice] = useState(0);
   const [categoryID, setCategoryID] = useState("");
-  const [snackbarObject, setSnackBarObject] = useState({});
-  const [isOpenSnackbar, setIsOpenSnackbar] = useState(false);
 
   const onSaveProduct = () => {
     const errMsg = isAllFieldsInProductCorrect({
@@ -23,8 +21,6 @@ export function AddProductForm({ isOpen, onClose }) {
       categoryID,
     });
     if (errMsg) {
-      setIsOpenSnackbar(true);
-      setSnackBarObject({ msg: errMsg, reason: "error" });
       return;
     }
     dispatch(
@@ -36,11 +32,6 @@ export function AddProductForm({ isOpen, onClose }) {
         quantity,
       })
     );
-    setSnackBarObject({
-      msg: "Product was successfully added",
-      reason: "success",
-    });
-
     onClose();
   };
   return (

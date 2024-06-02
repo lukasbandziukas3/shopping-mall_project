@@ -8,16 +8,16 @@ export function isAllFieldsInProductCorrect({
   if (!name) {
     errMsg += "Product name can not be empty";
   }
-  if (!quantity) {
+  if (quantity === "") {
     errMsg += ", product quantity can not be empty";
   }
-  if (Number(quantity) && quantity < 0) {
+  if (quantity < 0) {
     errMsg += ", product quantity can not be negative";
   }
   if (price === "") {
     errMsg += ", product price can not be empty";
   }
-  if (Number(price) && price < 0) {
+  if (price < 0) {
     errMsg += ", product price can not be negative";
   }
   if (categoryID === "") {

@@ -20,7 +20,6 @@ const productsSlice = createSlice({
       const existingProduct = state.products.find(
         (product) => product.id === id
       );
-      console.log(existingProduct, "existing product");
       if (existingProduct) {
         existingProduct.name = name;
         existingProduct.categoryID = categoryID;
