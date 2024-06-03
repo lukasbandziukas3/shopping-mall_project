@@ -10,7 +10,7 @@ import {
   Button,
 } from "@mui/material";
 
-export const ProductsTable = memo(({ onProductUpdate }) => {
+export const ProductsTable = memo(({ onProductUpdate, onProductBuy }) => {
   const products = useSelector((state) => state.products.products);
   const categories = useSelector((state) => state.categories.categories);
 
@@ -37,8 +37,8 @@ export const ProductsTable = memo(({ onProductUpdate }) => {
           {products.map((product) => (
             <TableRow key={product.id} sx={{ display: "flex" }}>
               <TableCell sx={{ flex: 1 }}>{product.name}</TableCell>
-              <TableCell sx={{ flex: 1 }}>{product.price}</TableCell>
               <TableCell sx={{ flex: 1 }}>{product.quantity}</TableCell>
+              <TableCell sx={{ flex: 1 }}>{product.price}</TableCell>
               <TableCell sx={{ flex: 1 }}>
                 {
                   categories.find(
@@ -58,6 +58,7 @@ export const ProductsTable = memo(({ onProductUpdate }) => {
                   sx={{ ml: 1 }}
                   data-product-id={product.id}
                   variant="contained"
+                  onClick={onProductBuy}
                 >
                   Buy
                 </Button>

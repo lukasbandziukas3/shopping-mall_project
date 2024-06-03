@@ -4,6 +4,7 @@ import { CategoriesPage } from "./pages/CategoiesPage/CategoriesPage";
 import { MainPage } from "./pages/MainPage/MainPage";
 import { OrdersPage } from "./pages/OrdersPage/OrdersPage";
 import { ProductsPage } from "./pages/ProductsPage/ProductsPage";
+import { CartPage } from "./pages/CartPage/CartPage";
 import { NavigationPanel } from "./components/shared/Navigation";
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
         <Route exact path="/categories" element={<CategoriesPage />} />
         <Route exact path="/products" element={<ProductsPage />} />
         <Route exact path="/orders" element={<OrdersPage />} />
+        <Route exact path="/cart" element={<CartPage />} />
       </Routes>
     </div>
   );

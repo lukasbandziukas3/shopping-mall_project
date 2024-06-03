@@ -5,6 +5,7 @@ import ProductIcon from "@mui/icons-material/LocalMall";
 import CategoryIcon from "@mui/icons-material/Redeem";
 import OrdersIcon from "@mui/icons-material/Store";
 import MainPageIcon from "@mui/icons-material/AccountBalance";
+import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
@@ -53,6 +54,16 @@ export function NavigationPanel() {
           component={Link}
           label="orders"
           icon={<OrdersIcon />}
+        />
+        <BottomNavigationAction
+          sx={{
+            ml: "auto",
+          }}
+          to="/cart"
+          value="/cart"
+          component={Link}
+          label="cart"
+          icon={<AddShoppingCartIcon />}
         />
       </BottomNavigation>
     </Box>
