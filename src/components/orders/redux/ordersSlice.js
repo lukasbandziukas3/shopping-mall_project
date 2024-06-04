@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   orders: [
     {
-      date: new Date(),
+      date: new Date().toISOString(),
       customer: "dev",
       products: [
         { name: "snikers", quantity: 5, price: 5 },
@@ -12,13 +12,13 @@ const initialState = {
       id: 1,
     },
     {
-      date: new Date(),
+      date: new Date().toISOString(),
       customer: "dev",
       products: [{ name: "smartTv", quantity: 1, price: 1500 }],
       id: 2,
     },
     {
-      date: new Date(),
+      date: new Date().toISOString(),
       customer: "dev",
       products: [
         { name: "pan", quantity: 5, price: 1 },
@@ -27,13 +27,13 @@ const initialState = {
       id: 3,
     },
     {
-      date: new Date(),
+      date: new Date().toISOString(),
       customer: "dev",
       products: [{ name: "book", quantity: 8, price: 2.5 }],
       id: 4,
     },
     {
-      date: new Date(),
+      date: new Date().toISOString(),
       customer: "dev",
       products: [{ name: "bentley", quantity: 1, price: 100000 }],
       id: 5,
@@ -45,12 +45,24 @@ const ordersSlice = createSlice({
   name: "orders",
   initialState,
   reducers: {
-    ordersAdded(state, action) {
-      state.orders.push(action.payload);
+    orderAdded: {
+      reducer(state, action) {
+        state.orders.push(action.payload);
+      },
+      prepare({ products }) {
+        return {
+          payload: {
+            id: Math.floor(Math.random() * 1000),
+            date: new Date().toISOString(),
+            customer: "dev",
+            products,
+          },
+        };
+      },
     },
   },
 });
 
-export const { ordersAdded } = ordersSlice.actions;
+export const { orderAdded } = ordersSlice.actions;
 
 export default ordersSlice.reducer;

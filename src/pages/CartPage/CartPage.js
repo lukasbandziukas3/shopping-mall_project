@@ -1,7 +1,5 @@
+import { CartList } from "../../components/cart/CartList";
+
 export function CartPage() {
-  return (
-    <div>
-      <h1> Cart Page </h1>
-    </div>
-  );
+  return <CartList />;
 }

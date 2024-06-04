@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { CategoryForm } from "./shared/CategoryForm";
 import { AddCategoryName } from "./shared/AddCategoryName";
-import { categoryAdded } from "./categoriesSlice";
+import { categoryAdded } from "./redux/categoriesSlice";
 
 export function AddCategoryForm({ isOpen, onClose }) {
   const [categoryName, setCategoryName] = useState("");

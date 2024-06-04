@@ -27,12 +27,35 @@ const productsSlice = createSlice({
         existingProduct.quantity = quantity;
       }
     },
-    productAdded(state, action) {
-      state.products.push(action.payload);
+    updateProductQuantity(state, action) {
+      const { productId, quantityDef } = action.payload;
+      const existingProduct = state.products.find(
+        (product) => product.id === productId
+      );
+      if (existingProduct) {
+        existingProduct.quantity += quantityDef;
+      }
+    },
+    productAdded: {
+      reducer(state, action) {
+        state.products.push(action.payload);
+      },
+      prepare({ name, categoryID, price, quantity }) {
+        return {
+          payload: {
+            id: Math.floor(Math.random() * 1000),
+            name,
+            categoryID,
+            price,
+            quantity,
+          },
+        };
+      },
     },
   },
 });
 
-export const { productAdded, productUpdated } = productsSlice.actions;
+export const { productAdded, productUpdated, updateProductQuantity } =
+  productsSlice.actions;
 
 export default productsSlice.reducer;

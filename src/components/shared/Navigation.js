@@ -10,6 +10,8 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 
+import { BadgeBottomNavigationAction } from "./BadgeBottomNavigationAction";
+
 export function NavigationPanel() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -55,10 +57,7 @@ export function NavigationPanel() {
           label="orders"
           icon={<OrdersIcon />}
         />
-        <BottomNavigationAction
-          sx={{
-            ml: "auto",
-          }}
+        <BadgeBottomNavigationAction
           to="/cart"
           value="/cart"
           component={Link}

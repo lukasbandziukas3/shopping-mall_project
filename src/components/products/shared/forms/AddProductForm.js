@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 
-import { productAdded } from "./productsSlice";
-import { ProductForm } from "./shared/ProductForm";
-import { isAllFieldsInProductCorrect } from "./helpers/helpers";
+import { productAdded } from "../../redux/productsSlice";
+import { ProductForm } from "./ProductForm";
+import { isAllFieldsInProductCorrect } from "../../helpers/helpers";
 
-export function AddProductForm({ isOpen, onClose }) {
+export function AddProductForm({ onClose }) {
   const dispatch = useDispatch();
 
   const [name, setName] = useState("");
@@ -25,7 +25,6 @@ export function AddProductForm({ isOpen, onClose }) {
     }
     dispatch(
       productAdded({
-        id: Math.floor(Math.random() * 1000),
         name,
         categoryID: categoryID,
         price,
@@ -36,7 +35,6 @@ export function AddProductForm({ isOpen, onClose }) {
   };
   return (
     <ProductForm
-      isOpen={isOpen}
       onClose={onClose}
       onSaveProduct={onSaveProduct}
       name={name}

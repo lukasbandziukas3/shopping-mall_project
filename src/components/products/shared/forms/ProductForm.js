@@ -6,13 +6,12 @@ import {
   Zoom,
 } from "@mui/material";
 
-import { SelectCategory } from "./SelectCategory";
-import { AddProductName } from "./AddProductName";
-import { AddProductPrice } from "./AddProductPrice";
-import { AddProductQuantity } from "./AddProductQuantity";
+import { SelectCategory } from "../SelectCategory";
+import { AddProductName } from "../AddProductName";
+import { AddProductPrice } from "../AddProductPrice";
+import { AddProductQuantity } from "../AddProductQuantity";
 
 export function ProductForm({
-  isOpen,
   onClose,
   onSaveProduct,
   name,
@@ -30,7 +29,7 @@ export function ProductForm({
       maxWidth="lg"
       fullWidth={true}
       TransitionComponent={Zoom}
-      open={isOpen}
+      open={true}
     >
       <DialogTitle>{formMessage}</DialogTitle>
       <DialogActions>

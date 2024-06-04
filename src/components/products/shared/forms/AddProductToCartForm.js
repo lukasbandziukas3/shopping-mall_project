@@ -8,9 +8,10 @@ import {
   Zoom,
   TextField,
 } from "@mui/material";
-import { addedOrderToCart } from "../../cart/cartSlice";
+import { addedOrderToCart } from "../../../cart/redux/cartSlice";
+import { updateProductQuantity } from "../../../products/redux/productsSlice";
 
-export function AddProductToCartForm({ isOpen, onClose, productId }) {
+export function AddProductToCartForm({ onClose, productId }) {
   const dispatch = useDispatch();
 
   const product = useSelector((state) =>
@@ -31,15 +32,20 @@ export function AddProductToCartForm({ isOpen, onClose, productId }) {
         price: product.price,
       })
     );
-
+    dispatch(
+      updateProductQuantity({
+        productId: product.id,
+        quantityDef: -Number(quantity),
+      })
+    );
     onClose();
   };
   return (
     <Dialog
-      maxWidth="lg"
+      maxWidth="sm"
       fullWidth={true}
       TransitionComponent={Zoom}
-      open={isOpen}
+      open={true}
     >
       <DialogTitle> Buy {product.name} </DialogTitle>
       <DialogActions>

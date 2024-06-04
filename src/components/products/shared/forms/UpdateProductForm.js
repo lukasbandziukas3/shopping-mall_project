@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { productUpdated } from "./productsSlice";
-import { ProductForm } from "./shared/ProductForm";
-import { isAllFieldsInProductCorrect } from "./helpers/helpers";
+import { productUpdated } from "../../redux/productsSlice";
+import { ProductForm } from "./ProductForm";
+import { isAllFieldsInProductCorrect } from "../../helpers/helpers";
 
-export function UpdateProductForm({ isOpen, onClose, productId }) {
+export function UpdateProductForm({ onClose, productId }) {
   const dispatch = useDispatch();
 
   const product = useSelector((state) =>
@@ -41,7 +41,6 @@ export function UpdateProductForm({ isOpen, onClose, productId }) {
   };
   return (
     <ProductForm
-      isOpen={isOpen}
       onClose={onClose}
       onSaveProduct={onSaveProduct}
       name={name}

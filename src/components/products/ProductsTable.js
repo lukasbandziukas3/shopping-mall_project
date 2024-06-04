@@ -59,8 +59,9 @@ export const ProductsTable = memo(({ onProductUpdate, onProductBuy }) => {
                   data-product-id={product.id}
                   variant="contained"
                   onClick={onProductBuy}
+                  disabled={product.quantity === 0}
                 >
-                  Buy
+                  Add to cart
                 </Button>
               </TableCell>
             </TableRow>
