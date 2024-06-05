@@ -1,13 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { fetchCategories } from "./thunk";
 
 const initialState = {
-  categories: [
-    { name: "shoes", id: 1 },
-    { name: "wears", id: 2 },
-    { name: "tools", id: 3 },
-    { name: "books", id: 4 },
-    { name: "cars", id: 5 },
-  ],
+  categories: [],
+  status: "idle",
+  err: null,
 };
 
 const categoriesSlice = createSlice({
@@ -26,6 +23,19 @@ const categoriesSlice = createSlice({
     categoryAdded(state, action) {
       state.categories.push(action.payload);
     },
+  },
+  extraReducers(builder) {
+    builder
+      .addCase(fetchCategories.pending, (state, action) => {
+        state.status = "loading";
+      })
+      .addCase(fetchCategories.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.categories = action.payload;
+      })
+      .addCase(fetchCategories.rejected, (state, action) => {
+        state.status = "failed";
+      });
   },
 });
 

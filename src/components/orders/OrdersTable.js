@@ -10,6 +10,7 @@ import {
 
 export const OrdersTable = () => {
   const orders = useSelector((state) => state.orders.orders);
+
   return (
     <TableContainer>
       <Table>
