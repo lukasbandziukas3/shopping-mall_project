@@ -1,5 +1,3 @@
-import AppBar from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
 import BottomNavigation from "@mui/material/BottomNavigation";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
 import ProductIcon from "@mui/icons-material/LocalMall";
@@ -8,7 +6,6 @@ import OrdersIcon from "@mui/icons-material/Store";
 import MainPageIcon from "@mui/icons-material/AccountBalance";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import { useNavigate, useLocation } from "react-router-dom";
-import { styled } from "@mui/material/styles";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 

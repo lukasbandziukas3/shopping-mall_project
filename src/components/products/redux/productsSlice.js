@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchProducts } from "./thunk";
+import { fetchProducts, productAdded, productUpdated } from "./thunk";
 
 const initialState = {
   products: [],
@@ -11,18 +11,6 @@ const productsSlice = createSlice({
   name: "products",
   initialState,
   reducers: {
-    productUpdated(state, action) {
-      const { id, name, categoryID, price, quantity } = action.payload;
-      const existingProduct = state.products.find(
-        (product) => product.id === id
-      );
-      if (existingProduct) {
-        existingProduct.name = name;
-        existingProduct.categoryID = categoryID;
-        existingProduct.price = price;
-        existingProduct.quantity = quantity;
-      }
-    },
     updateProductQuantity(state, action) {
       const { productId, quantityDef } = action.payload;
       const existingProduct = state.products.find(
@@ -31,22 +19,6 @@ const productsSlice = createSlice({
       if (existingProduct) {
         existingProduct.quantity += quantityDef;
       }
-    },
-    productAdded: {
-      reducer(state, action) {
-        state.products.push(action.payload);
-      },
-      prepare({ name, categoryID, price, quantity }) {
-        return {
-          payload: {
-            id: Math.floor(Math.random() * 1000),
-            name,
-            categoryID,
-            price,
-            quantity,
-          },
-        };
-      },
     },
   },
   extraReducers(builder) {
@@ -60,11 +32,39 @@ const productsSlice = createSlice({
       })
       .addCase(fetchProducts.rejected, (state, action) => {
         state.status = "failed";
+      })
+      .addCase(productAdded.pending, (state, action) => {
+        state.status = "loading";
+      })
+      .addCase(productAdded.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.products.push(action.payload);
+      })
+      .addCase(productAdded.rejected, (state, action) => {
+        state.status = "failed";
+      })
+      .addCase(productUpdated.pending, (state, action) => {
+        state.status = "loading";
+      })
+      .addCase(productUpdated.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        const { id, name, categoryID, price, quantity } = action.payload;
+        const existingProduct = state.products.find(
+          (product) => product.id === id
+        );
+        if (existingProduct) {
+          existingProduct.name = name;
+          existingProduct.categoryID = categoryID;
+          existingProduct.price = price;
+          existingProduct.quantity = quantity;
+        }
+      })
+      .addCase(productUpdated.rejected, (state, action) => {
+        state.status = "failed";
       });
   },
 });
 
-export const { productAdded, productUpdated, updateProductQuantity } =
-  productsSlice.actions;
+export const { updateProductQuantity } = productsSlice.actions;
 
 export default productsSlice.reducer;

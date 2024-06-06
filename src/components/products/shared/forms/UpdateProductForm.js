@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { productUpdated } from "../../redux/productsSlice";
+import { productUpdated } from "../../redux/thunk";
 import { ProductForm } from "./ProductForm";
 import { isAllFieldsInProductCorrect } from "../../helpers/helpers";
 

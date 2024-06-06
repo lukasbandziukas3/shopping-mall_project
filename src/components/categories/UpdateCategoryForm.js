@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { CategoryForm } from "./shared/CategoryForm";
 import { AddCategoryName } from "./shared/AddCategoryName";
-import { categoryUpdated } from "./redux/categoriesSlice";
+import { categoryUpdated } from "./redux/thunk";
 
 export function UpdateCategoryForm({ isOpen, onClose, categoryID }) {
   const [categoryName, setCategoryName] = useState(

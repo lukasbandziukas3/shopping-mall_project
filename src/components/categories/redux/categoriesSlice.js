@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchCategories } from "./thunk";
+import { fetchCategories, categoryAdded, categoryUpdated } from "./thunk";
 
 const initialState = {
   categories: [],
@@ -10,20 +10,7 @@ const initialState = {
 const categoriesSlice = createSlice({
   name: "categories",
   initialState,
-  reducers: {
-    categoryUpdated(state, action) {
-      const { id, name } = action.payload;
-      const existingCategory = state.categories.find(
-        (category) => category.id === id
-      );
-      if (existingCategory) {
-        existingCategory.name = name;
-      }
-    },
-    categoryAdded(state, action) {
-      state.categories.push(action.payload);
-    },
-  },
+  reducers: {},
   extraReducers(builder) {
     builder
       .addCase(fetchCategories.pending, (state, action) => {
@@ -35,10 +22,34 @@ const categoriesSlice = createSlice({
       })
       .addCase(fetchCategories.rejected, (state, action) => {
         state.status = "failed";
+      })
+      .addCase(categoryAdded.pending, (state, action) => {
+        state.status = "loading";
+      })
+      .addCase(categoryAdded.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.categories.push(action.payload);
+      })
+      .addCase(categoryAdded.rejected, (state, action) => {
+        state.status = "failed";
+      })
+      .addCase(categoryUpdated.pending, (state, action) => {
+        state.status = "loading";
+      })
+      .addCase(categoryUpdated.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        const { id, name } = action.payload;
+        const existingCategory = state.categories.find(
+          (category) => category.id === id
+        );
+        if (existingCategory) {
+          existingCategory.name = name;
+        }
+      })
+      .addCase(categoryUpdated.rejected, (state, action) => {
+        state.status = "failed";
       });
   },
 });
-
-export const { categoryUpdated, categoryAdded } = categoriesSlice.actions;
 
 export default categoriesSlice.reducer;
