@@ -29,10 +29,10 @@ export const OrdersTable = () => {
         </TableHead>
         <TableBody>
           {orders.map((order) => (
-            <TableRow key={order.id} sx={{ display: "flex" }}>
+            <TableRow key={order._id} sx={{ display: "flex" }}>
               <TableCell sx={{ flex: 1 }}>{order.customer}</TableCell>
               <TableCell sx={{ flex: 1 }}>
-                {order.date.toLocaleString()}
+                {order.orderDate.toLocaleString()}
               </TableCell>
               <TableCell sx={{ flex: 1 }}>
                 {order.products.reduce((accumulatorPrice, currentProduct) => {
