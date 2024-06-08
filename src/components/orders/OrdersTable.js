@@ -30,7 +30,7 @@ export const OrdersTable = () => {
         <TableBody>
           {orders.map((order) => (
             <TableRow key={order._id} sx={{ display: "flex" }}>
-              <TableCell sx={{ flex: 1 }}>{order.customer}</TableCell>
+              <TableCell sx={{ flex: 1 }}>{order.customer.nickName}</TableCell>
               <TableCell sx={{ flex: 1 }}>
                 {order.orderDate.toLocaleString()}
               </TableCell>

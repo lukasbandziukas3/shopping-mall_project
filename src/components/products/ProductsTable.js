@@ -12,7 +12,6 @@ import {
 
 export const ProductsTable = memo(({ onProductUpdate, onProductBuy }) => {
   const products = useSelector((state) => state.products.products);
-  const categories = useSelector((state) => state.categories.categories);
 
   return (
     <TableContainer>
@@ -39,13 +38,7 @@ export const ProductsTable = memo(({ onProductUpdate, onProductBuy }) => {
               <TableCell sx={{ flex: 1 }}>{product.name}</TableCell>
               <TableCell sx={{ flex: 1 }}>{product.quantity}</TableCell>
               <TableCell sx={{ flex: 1 }}>{product.price}</TableCell>
-              <TableCell sx={{ flex: 1 }}>
-                {
-                  categories.find(
-                    (category) => category.id === product.categoryID
-                  ).name
-                }
-              </TableCell>
+              <TableCell sx={{ flex: 1 }}>{product.category.name}</TableCell>
               <TableCell sx={{ flex: 2 }} align="center">
                 <Button
                   onClick={onProductUpdate}

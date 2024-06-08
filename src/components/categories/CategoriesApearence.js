@@ -10,11 +10,11 @@ export const CategoriesApearence = memo(({ onUpdate }) => {
   return (
     <List>
       {catagories.map((category) => (
-        <ListItem key={category.id}>
+        <ListItem key={category._id}>
           <ListItemText> {category.name} </ListItemText>
           <Button
             variant="contained"
-            data-category-id={category.id}
+            data-category-id={category._id}
             onClick={onUpdate}
           >
             update
