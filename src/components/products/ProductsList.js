@@ -37,7 +37,7 @@ export function ProductsList() {
       </Button>
       <Form
         formType={openFormName}
-        productId={Number(currentProductId)}
+        productId={currentProductId}
         onClose={closeForm}
       />
     </>

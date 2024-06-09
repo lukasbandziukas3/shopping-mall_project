@@ -38,10 +38,11 @@ const categoriesSlice = createSlice({
       })
       .addCase(categoryUpdated.fulfilled, (state, action) => {
         state.status = "succeeded";
-        const { id, name } = action.payload;
+        const { _id, name } = action.payload;
         const existingCategory = state.categories.find(
-          (category) => category.id === id
+          (category) => category._id === _id
         );
+        console.log(existingCategory);
         if (existingCategory) {
           existingCategory.name = name;
         }

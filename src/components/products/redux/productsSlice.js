@@ -48,13 +48,13 @@ const productsSlice = createSlice({
       })
       .addCase(productUpdated.fulfilled, (state, action) => {
         state.status = "succeeded";
-        const { id, name, categoryID, price, quantity } = action.payload;
+        const { _id, name, category, price, quantity } = action.payload;
         const existingProduct = state.products.find(
-          (product) => product.id === id
+          (product) => product._id === _id
         );
         if (existingProduct) {
           existingProduct.name = name;
-          existingProduct.categoryID = categoryID;
+          existingProduct.category = category;
           existingProduct.price = price;
           existingProduct.quantity = quantity;
         }

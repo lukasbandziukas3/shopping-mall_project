@@ -6,12 +6,11 @@ import { categoryUpdated } from "./redux/thunk";
 
 export function UpdateCategoryForm({ isOpen, onClose, categoryID }) {
   const [categoryName, setCategoryName] = useState(
-    useSelector(
-      (state) =>
-        state.categories.categories.find(
-          (category) => category.id === Number(categoryID)
-        ).name
-    )
+    useSelector((state) => {
+      return state.categories.categories.find(
+        (category) => category._id === categoryID
+      ).name;
+    })
   );
   const dispatch = useDispatch();
 
@@ -21,7 +20,7 @@ export function UpdateCategoryForm({ isOpen, onClose, categoryID }) {
     }
     dispatch(
       categoryUpdated({
-        id: categoryID,
+        _id: categoryID,
         name: categoryName,
       })
     );

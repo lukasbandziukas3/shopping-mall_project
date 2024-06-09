@@ -34,7 +34,7 @@ export const ProductsTable = memo(({ onProductUpdate, onProductBuy }) => {
         </TableHead>
         <TableBody>
           {products.map((product) => (
-            <TableRow key={product.id} sx={{ display: "flex" }}>
+            <TableRow key={product._id} sx={{ display: "flex" }}>
               <TableCell sx={{ flex: 1 }}>{product.name}</TableCell>
               <TableCell sx={{ flex: 1 }}>{product.quantity}</TableCell>
               <TableCell sx={{ flex: 1 }}>{product.price}</TableCell>
@@ -42,14 +42,14 @@ export const ProductsTable = memo(({ onProductUpdate, onProductBuy }) => {
               <TableCell sx={{ flex: 2 }} align="center">
                 <Button
                   onClick={onProductUpdate}
-                  data-product-id={product.id}
+                  data-product-id={product._id}
                   variant="contained"
                 >
                   edit
                 </Button>
                 <Button
                   sx={{ ml: 1 }}
-                  data-product-id={product.id}
+                  data-product-id={product._id}
                   variant="contained"
                   onClick={onProductBuy}
                   disabled={product.quantity === 0}

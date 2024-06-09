@@ -26,7 +26,7 @@ export function AddProductForm({ onClose }) {
     dispatch(
       productAdded({
         name,
-        categoryID: categoryID,
+        category: categoryID,
         price,
         quantity,
       })

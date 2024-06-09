@@ -43,7 +43,7 @@ export function CategoriesList() {
         <UpdateCategoryForm
           isOpen={isFormUpdateCategoryOpen}
           onClose={closeFormUpdateCategory}
-          categoryID={Number(updateCategoryId)}
+          categoryID={updateCategoryId}
         />
       )}
     </Box>

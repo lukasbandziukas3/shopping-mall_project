@@ -7,15 +7,20 @@ import { isAllFieldsInProductCorrect } from "../../helpers/helpers";
 
 export function UpdateProductForm({ onClose, productId }) {
   const dispatch = useDispatch();
-
   const product = useSelector((state) =>
-    state.products.products.find((product) => product.id === Number(productId))
+    state.products.products.find((product) => product._id === productId)
   );
 
+  const initCategoryID = useSelector(
+    (state) =>
+      state.categories.categories.find(
+        (category) => category.name === product.category.name
+      )._id
+  );
   const [name, setName] = useState(product.name);
   const [quantity, setQuantity] = useState(product.quantity);
   const [price, setPrice] = useState(product.price);
-  const [categoryID, setCategoryID] = useState(product.categoryID);
+  const [categoryID, setCategoryID] = useState(initCategoryID);
 
   const onSaveProduct = () => {
     const errMsg = isAllFieldsInProductCorrect({
@@ -29,9 +34,9 @@ export function UpdateProductForm({ onClose, productId }) {
     }
     dispatch(
       productUpdated({
-        id: productId,
+        _id: productId,
         name,
-        categoryID: categoryID,
+        category: categoryID,
         price,
         quantity,
       })
