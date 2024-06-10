@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchOrders } from "./thunk";
+import { fetchOrders, orderAdded } from "./thunk";
 
 const initialState = {
   orders: [],
@@ -10,23 +10,7 @@ const initialState = {
 const ordersSlice = createSlice({
   name: "orders",
   initialState,
-  reducers: {
-    orderAdded: {
-      reducer(state, action) {
-        state.orders.push(action.payload);
-      },
-      prepare({ products }) {
-        return {
-          payload: {
-            id: Math.floor(Math.random() * 1000),
-            date: new Date().toISOString(),
-            customer: "dev",
-            products,
-          },
-        };
-      },
-    },
-  },
+  reducers: {},
   extraReducers(builder) {
     builder
       .addCase(fetchOrders.pending, (state, action) => {
@@ -38,10 +22,18 @@ const ordersSlice = createSlice({
       })
       .addCase(fetchOrders.rejected, (state, action) => {
         state.status = "failed";
+      })
+      .addCase(orderAdded.pending, (state, action) => {
+        state.status = "loading";
+      })
+      .addCase(orderAdded.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.orders.push(action.payload);
+      })
+      .addCase(orderAdded.rejected, (state, action) => {
+        state.status = "failed";
       });
   },
 });
-
-export const { orderAdded } = ordersSlice.actions;
 
 export default ordersSlice.reducer;

@@ -9,7 +9,6 @@ import {
 
 export function SelectCategory({ productCategory, setProductCategory }) {
   const catagories = useSelector((state) => state.categories.categories);
-  console.log(productCategory, "category");
   return (
     <FormControl>
       <InputLabel

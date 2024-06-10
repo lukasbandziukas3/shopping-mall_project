@@ -10,7 +10,6 @@ import {
 
 export const CartTable = () => {
   const productsInCart = useSelector((state) => state.cart.orders);
-
   return (
     <TableContainer>
       <Table>

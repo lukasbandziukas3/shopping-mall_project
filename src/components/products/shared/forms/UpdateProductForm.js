@@ -11,16 +11,10 @@ export function UpdateProductForm({ onClose, productId }) {
     state.products.products.find((product) => product._id === productId)
   );
 
-  const initCategoryID = useSelector(
-    (state) =>
-      state.categories.categories.find(
-        (category) => category.name === product.category.name
-      )._id
-  );
   const [name, setName] = useState(product.name);
   const [quantity, setQuantity] = useState(product.quantity);
   const [price, setPrice] = useState(product.price);
-  const [categoryID, setCategoryID] = useState(initCategoryID);
+  const [categoryID, setCategoryID] = useState(product.category._id);
 
   const onSaveProduct = () => {
     const errMsg = isAllFieldsInProductCorrect({

@@ -15,7 +15,7 @@ export function AddProductToCartForm({ onClose, productId }) {
   const dispatch = useDispatch();
 
   const product = useSelector((state) =>
-    state.products.products.find((product) => product.id === productId)
+    state.products.products.find((product) => product._id === productId)
   );
 
   const [quantity, setQuantity] = useState(1);
@@ -26,7 +26,7 @@ export function AddProductToCartForm({ onClose, productId }) {
     }
     dispatch(
       addedOrderToCart({
-        productId: product.id,
+        productId: product._id,
         productName: product.name,
         productQuantity: Number(quantity),
         price: product.price,
