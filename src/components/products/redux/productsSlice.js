@@ -13,8 +13,9 @@ const productsSlice = createSlice({
   reducers: {
     updateProductQuantity(state, action) {
       const { productId, quantityDef } = action.payload;
+      console.log(state.products);
       const existingProduct = state.products.find(
-        (product) => product.id === productId
+        (product) => product._id === productId
       );
       if (existingProduct) {
         existingProduct.quantity += quantityDef;

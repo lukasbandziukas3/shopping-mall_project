@@ -17,6 +17,19 @@ export const cancelOrderFromCart = createAsyncThunk(
   }
 );
 
+export const addedOrderToCart = createAsyncThunk(
+  "cart/orderAddedTocart",
+  async (product, { dispatch, getState }) => {
+    dispatch(
+      updateProductQuantity({
+        productId: product.productId,
+        quantityDef: -product.productQuantity,
+      })
+    );
+    return product;
+  }
+);
+
 export const makePurchase = createAsyncThunk(
   "cart/makePurchase",
   async (arg, { dispatch, getState }) => {

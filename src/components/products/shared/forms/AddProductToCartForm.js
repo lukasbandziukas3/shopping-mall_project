@@ -8,8 +8,7 @@ import {
   Zoom,
   TextField,
 } from "@mui/material";
-import { addedOrderToCart } from "../../../cart/redux/cartSlice";
-import { updateProductQuantity } from "../../../products/redux/productsSlice";
+import { addedOrderToCart } from "../../../cart/redux/thunks";
 
 export function AddProductToCartForm({ onClose, productId }) {
   const dispatch = useDispatch();
@@ -30,12 +29,6 @@ export function AddProductToCartForm({ onClose, productId }) {
         productName: product.name,
         productQuantity: Number(quantity),
         price: product.price,
-      })
-    );
-    dispatch(
-      updateProductQuantity({
-        productId: product.id,
-        quantityDef: -Number(quantity),
       })
     );
     onClose();
