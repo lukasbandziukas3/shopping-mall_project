@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { cancelOrderFromCart, makePurchase } from "./thunks";
+import { cancelOrderFromCart } from "./thunks";
 
 const initialState = {
   orders: [],
@@ -25,9 +25,6 @@ const cartSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(cancelOrderFromCart.fulfilled, (state, action) => {
-      state.orders = [];
-    });
-    builder.addCase(makePurchase.fulfilled, (state, action) => {
       state.orders = [];
     });
   },
