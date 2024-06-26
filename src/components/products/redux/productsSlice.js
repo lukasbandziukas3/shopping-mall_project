@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { fetchProducts, productAdded, productUpdated } from "./thunk";
+import {toast} from "react-toastify";
 
 const initialState = {
   products: [],
@@ -13,7 +14,6 @@ const productsSlice = createSlice({
   reducers: {
     updateProductQuantity(state, action) {
       const { productId, quantityDef } = action.payload;
-      console.log(state.products);
       const existingProduct = state.products.find(
         (product) => product._id === productId
       );
@@ -38,13 +38,16 @@ const productsSlice = createSlice({
         state.status = "loading";
       })
       .addCase(productAdded.fulfilled, (state, action) => {
+        toast.success('product was added', { autoClose: 2500 });
         state.status = "succeeded";
         state.products.push(action.payload);
       })
       .addCase(productAdded.rejected, (state, action) => {
+        toast.warning(`ups error`, { autoClose: 2500 });
         state.status = "failed";
       })
       .addCase(productUpdated.pending, (state, action) => {
+        toast.success('product was updated', { autoClose: 2500 });
         state.status = "loading";
       })
       .addCase(productUpdated.fulfilled, (state, action) => {
@@ -61,6 +64,7 @@ const productsSlice = createSlice({
         }
       })
       .addCase(productUpdated.rejected, (state, action) => {
+        toast.warning(`ups error`, { autoClose: 2500 });
         state.status = "failed";
       });
   },

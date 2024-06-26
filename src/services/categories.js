@@ -9,6 +9,6 @@ export const saveCategory = async (body) => {
   return await api.post(`${ROUTE}`, body);
 };
 
-export const updateCategory = async (body) => {
-  return await api.put(`${ROUTE}`, body);
+export const updateCategory = async (categoryId,body) => {
+  return await api.put(`${ROUTE}/${categoryId}`, body);
 };

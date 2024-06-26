@@ -9,6 +9,6 @@ export const saveProduct = async (body) => {
   return await api.post(`${ROUTE}`, body);
 };
 
-export const updateProduct = async (body) => {
-  return await api.put(`${ROUTE}`, body);
+export const updateProduct = async (productId,body) => {
+  return await api.put(`${ROUTE}/${productId}`, body);
 };

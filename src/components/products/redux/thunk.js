@@ -24,7 +24,8 @@ export const productAdded = createAsyncThunk(
 export const productUpdated = createAsyncThunk(
   "products/productUpdated",
   async (product) => {
-    const response = await updateProduct(product);
+    const { productId, productData } = product;
+    const response = await updateProduct(productId, productData);
     return response.data;
   }
 );

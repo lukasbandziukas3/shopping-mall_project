@@ -19,11 +19,11 @@ export function UpdateCategoryForm({ isOpen, onClose, categoryID }) {
       return;
     }
     dispatch(
-      categoryUpdated({
-        _id: categoryID,
-        name: categoryName,
-      })
-    );
+          categoryUpdated( {categoryID, categoryData:{
+            name: categoryName,
+          }
+         }
+      ));
     onClose();
   };
 

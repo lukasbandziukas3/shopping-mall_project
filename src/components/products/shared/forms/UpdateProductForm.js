@@ -27,12 +27,13 @@ export function UpdateProductForm({ onClose, productId }) {
       return;
     }
     dispatch(
-      productUpdated({
-        _id: productId,
-        name,
-        category: categoryID,
-        price,
-        quantity,
+      productUpdated( { productId,
+        productData:{
+          name,
+          category: categoryID,
+          price,
+          quantity,
+      }
       })
     );
 
