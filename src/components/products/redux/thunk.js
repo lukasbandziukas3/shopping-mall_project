@@ -7,8 +7,10 @@ import {
 
 export const fetchProducts = createAsyncThunk(
   "products/fetchProducts",
-  async () => {
-    const response = await getAllProducts();
+    async (param, { dispatch, getState }) => {
+     const {filters, searchText} = getState().products
+     const filtersCategory =  filters.map(filter => filter._id);
+     const response = await getAllProducts({filtersCategory,searchText});
     return response.data;
   }
 );

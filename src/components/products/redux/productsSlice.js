@@ -6,6 +6,8 @@ const initialState = {
   products: [],
   status: "idle",
   err: null,
+  filters: [],
+  searchText: ""
 };
 
 const productsSlice = createSlice({
@@ -21,6 +23,12 @@ const productsSlice = createSlice({
         existingProduct.quantity += quantityDef;
       }
     },
+    setCategoryFilters(state,action) {
+      state.filters = action.payload;
+    },
+    setSearchText(state,action) {
+      state.searchText = action.payload;
+    }
   },
   extraReducers(builder) {
     builder
@@ -70,6 +78,6 @@ const productsSlice = createSlice({
   },
 });
 
-export const { updateProductQuantity } = productsSlice.actions;
+export const { updateProductQuantity,setCategoryFilters,setSearchText } = productsSlice.actions;
 
 export default productsSlice.reducer;
