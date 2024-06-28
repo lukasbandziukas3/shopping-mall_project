@@ -3,7 +3,6 @@ import {Box, Button} from "@mui/material";
 
 import { ProductsTable } from "./ProductsTable";
 import { Form } from "./Form";
-import {ProductFilter} from "./ProductFilter";
 
 export function ProductsList() {
   const [openFormName, setOpenFormName] = useState("");
@@ -29,7 +28,6 @@ export function ProductsList() {
 
   return (
     <Box>
-      <ProductFilter/>
       <ProductsTable
         onProductUpdate={openFormUpdateProduct}
         onProductBuy={openFormAddProductToCart}

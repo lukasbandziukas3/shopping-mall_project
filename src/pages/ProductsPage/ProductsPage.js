@@ -4,6 +4,7 @@ import { ProductsList } from "../../components/products/ProductsList";
 import { fetchProducts } from "../../components/products/redux/thunk";
 import { fetchCategories } from "../../components/categories/redux/thunk";
 import { CustomProgress } from "../../components/shared/CustomProgress";
+import {ProductFilter} from "../../components/products/ProductFilter";
 
 export function ProductsPage() {
   const statusCategories = useSelector((state) => state.categories.status);
@@ -24,5 +25,10 @@ export function ProductsPage() {
   if (statusCategories === "succeeded" && statusProducts === "succeeded") {
     content = <ProductsList />;
   }
-  return <>{content}</>;
+  return (
+  <>
+    <ProductFilter/>
+    {content}
+  </>
+ );
 }
