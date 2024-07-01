@@ -11,7 +11,7 @@ export const fetchProducts = createAsyncThunk(
      const {filters, searchText} = getState().products
      const filtersCategory =  filters.map(filter => filter._id);
      const response = await getAllProducts({filtersCategory,searchText});
-    return response.data;
+     return response.data;
   }
 );
 

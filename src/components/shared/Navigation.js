@@ -26,7 +26,8 @@ export function NavigationPanel() {
   };
 
   return (
-    <BottomNavigation showLabels value={value} onChange={handleChange}>
+
+  <BottomNavigation showLabels value={value} onChange={handleChange}>
       <BottomNavigationAction
         to="/"
         value="/"
