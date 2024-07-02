@@ -8,12 +8,11 @@ import {useLayoutEffect, useRef} from "react";
 
 export const  ProductSearch = ( )  => {
    const dispatch = useDispatch();
-   const isInitialMount = useRef(true);
-   const productSearchText = useSelector((state) => state.products.searchText);
+    const productSearchText = useSelector((state) => state.products.searchText);
+   const InitValue = useRef(productSearchText);
 
     useLayoutEffect(() => {
-       if (isInitialMount.current) {
-           isInitialMount.current = false;
+       if (InitValue.current === productSearchText) {
            return;
        }
         const timoutId = setTimeout(() => {
