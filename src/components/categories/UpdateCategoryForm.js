@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { CategoryForm } from "./shared/CategoryForm";
-import { AddCategoryName } from "./shared/AddCategoryName";
 import { categoryUpdated } from "./redux/thunk";
+import {FormGeneral} from "../shared/generalComponets/FormGeneral";
+import {TextFieldGeneral} from "../shared/generalComponets/TextFieldGeneral";
 
 export function UpdateCategoryForm({ isOpen, onClose, categoryID }) {
   const [categoryName, setCategoryName] = useState(
@@ -28,16 +28,20 @@ export function UpdateCategoryForm({ isOpen, onClose, categoryID }) {
   };
 
   return (
-    <CategoryForm
+    <FormGeneral
       isOpen={isOpen}
       onClose={onClose}
       formMessage="Update category"
-      onSaveCategory={onSaveCategory}
+      onSave={onSaveCategory}
+      maxWidth='sm'
     >
-      <AddCategoryName
-        categoryName={categoryName}
-        setCategoryName={setCategoryName}
-      />
-    </CategoryForm>
+        <TextFieldGeneral
+            value = {categoryName}
+            setValue = {setCategoryName}
+            label = "Category name"
+            errorMessage = "category name could not be empty"
+            error = {categoryName.length === 0 }
+        />
+    </FormGeneral>
   );
 }

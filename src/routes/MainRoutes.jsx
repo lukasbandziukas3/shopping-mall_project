@@ -5,6 +5,7 @@ import CategoriesPage from "../pages/CategoiesPage/CategoriesPage";
 import ProductsPage from "../pages/ProductsPage/ProductsPage";
 import OrdersPage from "../pages/OrdersPage/OrdersPage";
 import CartPage from "../pages/CartPage/CartPage";
+import UsersPage from "../pages/UserPage/UsersPage";
 
 
 
@@ -29,6 +30,10 @@ export const MainRoutes =   [
             {
                 path: '/orders',
                 element: <OrdersPage/>
+            },
+            {
+                path: '/users',
+                element: <UsersPage/>
             },
             {
                 path: '/cart',

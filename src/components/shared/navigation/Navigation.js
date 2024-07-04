@@ -5,6 +5,7 @@ import CategoryIcon from "@mui/icons-material/Redeem";
 import OrdersIcon from "@mui/icons-material/Store";
 import MainPageIcon from "@mui/icons-material/AccountBalance";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
+import Person4Icon from '@mui/icons-material/Person4';
 import { useNavigate, useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
@@ -55,6 +56,13 @@ export function NavigationPanel() {
         component={Link}
         label="orders"
         icon={<OrdersIcon />}
+      />
+      <BottomNavigationAction
+          to="/users"
+          value="/users"
+          component={Link}
+          label="users"
+          icon={<Person4Icon />}
       />
       <BadgeBottomNavigationAction
         to="/cart"

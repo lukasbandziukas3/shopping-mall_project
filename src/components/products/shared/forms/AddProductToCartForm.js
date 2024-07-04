@@ -1,14 +1,8 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  Dialog,
-  DialogTitle,
-  DialogActions,
-  Button,
-  Zoom,
-  TextField,
-} from "@mui/material";
 import { addedOrderToCart } from "../../../cart/redux/thunks";
+import {FormGeneral} from "../../../shared/generalComponets/FormGeneral";
+import {TextFieldGeneral} from "../../../shared/generalComponets/TextFieldGeneral";
 
 export function AddProductToCartForm({ onClose, productId }) {
   const dispatch = useDispatch();
@@ -33,38 +27,23 @@ export function AddProductToCartForm({ onClose, productId }) {
     );
     onClose();
   };
+  const errorMessage = `Product quantity could not be less than 1 and more than ${product.quantity }`
+    const formMessage = `Buy ${product.name}`;
   return (
-    <Dialog
-      maxWidth="sm"
-      fullWidth={true}
-      TransitionComponent={Zoom}
-      open={true}
-    >
-      <DialogTitle> Buy {product.name} </DialogTitle>
-      <DialogActions>
-        <TextField
-          label="Product's quantity"
-          error={quantity < 1 || quantity > product.quantity}
-          helperText={
-            quantity < 0 || quantity > product.quantity
-              ? `Quantity could not be less than 1 and more than  ${product.quantity}`
-              : "Enter quantity"
-          }
-          placeholder="Enter how many products do yuo want to buy"
-          value={quantity}
-          type="number"
-          min={1}
-          max={product.quantity}
-          onChange={(event) => setQuantity(event.target.value)}
-        />
-
-        <Button variant="contained" onClick={onBuyProduct}>
-          Buy {product.name}
-        </Button>
-        <Button color="error" variant="contained" onClick={onClose}>
-          cancel
-        </Button>
-      </DialogActions>
-    </Dialog>
+      <FormGeneral
+          onClose={onClose}
+          formMessage= {formMessage}
+          onSave={onBuyProduct}
+          maxWidth='sm'
+      >
+          <TextFieldGeneral
+              value = {quantity}
+              setValue = {setQuantity}
+              label = "Product  quantity"
+              errorMessage = {errorMessage}
+              error = { quantity < 1 || quantity > product.quantity }
+              type = 'number'
+          />
+      </FormGeneral>
   );
 }

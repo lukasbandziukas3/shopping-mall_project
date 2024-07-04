@@ -1,5 +1,5 @@
 import {useDispatch, useSelector} from "react-redux";
-import {Autocomplete, Stack, TextField} from "@mui/material";
+import {Autocomplete, TextField} from "@mui/material";
 
 import {setCategoryFilters} from "../../redux/productsSlice";
 
@@ -11,8 +11,8 @@ export const  CategoryFilter = () => {
         dispatch(setCategoryFilters(newValue));
     }
     return (
-        <Stack spacing={3} sx={{ width: 300 }}>
             <Autocomplete
+                sx = {{minWidth: 300}}
                 multiple
                 value={filters}
                 id="category-filter"
@@ -27,6 +27,5 @@ export const  CategoryFilter = () => {
                     />
                 )}
             />
-        </Stack>
     );
 }
