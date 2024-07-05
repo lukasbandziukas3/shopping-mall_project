@@ -4,6 +4,7 @@ import categoriesReducer from "../components/categories/redux/categoriesSlice";
 import usersReducer from "../components/users/redux/usersSlice";
 import ordersReducer from "../components/orders/redux/ordersSlice";
 import cartReducer from "../components/cart/redux/cartSlice";
+import authReducer from "../components/auth/redux/authSlice"
 
 export default configureStore({
   reducer: {
@@ -12,6 +13,7 @@ export default configureStore({
     orders: ordersReducer,
     users: usersReducer,
     cart: cartReducer,
+    auth: authReducer
   },
   devTools: true
 });

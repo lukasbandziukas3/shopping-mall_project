@@ -1,15 +1,17 @@
-import { useState, useCallback } from "react";
+import { useState } from "react";
 import {Box, Button} from "@mui/material";
 
 import { ProductsTable } from "./ProductsTable";
 import { Form } from "./Form";
 
 export function ProductsList() {
+
   const [openFormName, setOpenFormName] = useState("");
   const [currentProductId, setCurrentProductId] = useState(null);
 
-  const openFormAddProduct = () => {
-    setOpenFormName("addProduct");
+  const openFormProduct = (e) => {
+      setCurrentProductId(e.target.getAttribute("data-product-id"));
+      setOpenFormName("productForm");
   };
 
   const openFormAddProductToCart = (e) => {
@@ -17,22 +19,18 @@ export function ProductsList() {
     setOpenFormName("addProductToCart");
   };
 
-  const openFormUpdateProduct = useCallback((e) => {
-    setCurrentProductId(e.target.getAttribute("data-product-id"));
-    setOpenFormName("updateProduct");
-  }, []);
-
   const closeForm = () => {
-    setOpenFormName("");
+      setCurrentProductId(null);
+      setOpenFormName("");
   };
 
   return (
     <Box>
       <ProductsTable
-        onProductUpdate={openFormUpdateProduct}
+        onProductUpdate={openFormProduct}
         onProductBuy={openFormAddProductToCart}
       />
-      <Button sx={{ m: 5 }} variant="contained" onClick={openFormAddProduct}>
+      <Button sx={{ m: 5 }} variant="contained" onClick={openFormProduct}>
         Add new Product
       </Button>
       <Form

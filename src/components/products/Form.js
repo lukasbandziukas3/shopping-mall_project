@@ -1,13 +1,31 @@
-import { AddProductForm } from "./shared/forms/AddProductForm";
-import { UpdateProductForm } from "./shared/forms/UpdateProductForm";
+
+import { ProductForm } from "./shared/forms/ProductForm";
 import { AddProductToCartForm } from "./shared/forms/AddProductToCartForm";
+import {useDispatch, useSelector} from "react-redux";
+import {productAdded, productUpdated} from "./redux/thunk";
 
 export function Form({ formType, productId, onClose }) {
+  const product = useSelector((state) =>
+      state.products.products.find((product) => product._id === productId)
+  );
+
+  const dispatch = useDispatch();
+
+  const onUpdateProduct = ({productData}) =>{
+    dispatch(productUpdated( { productId, productData}));
+  }
+
+  const onSaveProduct = ({productData}) =>{
+    dispatch( productAdded(productData) );
+  }
   switch (formType) {
-    case "addProduct":
-      return <AddProductForm onClose={onClose} />;
-    case "updateProduct":
-      return <UpdateProductForm productId={productId} onClose={onClose} />;
+    case "productForm":
+      return <ProductForm
+                product={product}
+                onClose={onClose}
+                submitProduct = { productId ? onUpdateProduct : onSaveProduct }
+                formMessage = {productId ? "edit" : "add" }
+      />
     case "addProductToCart":
       return <AddProductToCartForm productId={productId} onClose={onClose} />;
     default:

@@ -1,23 +1,33 @@
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { productUpdated } from "../../redux/thunk";
+import { useSelector } from "react-redux";
 import { isAllFieldsInProductCorrect } from "../../helpers/helpers";
 import {FormGeneral} from "../../../shared/generalComponets/FormGeneral";
 import {TextFieldGeneral} from "../../../shared/generalComponets/TextFieldGeneral";
 import {MenuItem} from "@mui/material";
 import {SelectorGeneral} from "../../../shared/generalComponets/SelectorGeneral";
 
-export function UpdateProductForm({ onClose, productId }) {
-  const dispatch = useDispatch();
+export function ProductForm({ onClose, product, submitProduct,formMessage }) {
   const catagories = useSelector((state) => state.categories.categories);
-  const product = useSelector((state) =>
-    state.products.products.find((product) => product._id === productId)
-  );
+  const [name, setName] = useState(product?.name || '');
+  const [quantity, setQuantity] = useState(product?.quantity || 0 );
+  const [price, setPrice] = useState(product?.price || 0);
+  const [categoryID, setCategoryID] = useState(product?.category._id || '');
 
-  const [name, setName] = useState(product.name);
-  const [quantity, setQuantity] = useState(product.quantity);
-  const [price, setPrice] = useState(product.price);
-  const [categoryID, setCategoryID] = useState(product.category._id);
+  const onProductNameChange = (event) => {
+        setName(event.target.value);
+  }
+
+  const onPriceChange = (event) => {
+        setPrice(event.target.value);
+  }
+
+  const onQuantityChange = (event) => {
+        setQuantity(event.target.value);
+  }
+
+  const onCategoryChange = (event) => {
+       setCategoryID(event.target.value);
+  }
 
   const onSaveProduct = () => {
     const errMsg = isAllFieldsInProductCorrect({
@@ -29,30 +39,25 @@ export function UpdateProductForm({ onClose, productId }) {
     if (errMsg) {
       return;
     }
-    dispatch(
-      productUpdated( { productId,
-        productData:{
-          name,
-          category: categoryID,
-          price,
-          quantity,
-      }
-      })
-    );
-
+    submitProduct ({productData: {
+              name,
+              category: categoryID,
+              price,
+              quantity,
+          }
+    });
     onClose();
   };
   return (
-
       <FormGeneral
           onClose={onClose}
-          formMessage="update"
+          formMessage={formMessage}
           onSave={onSaveProduct}
           maxWidth='lg'
       >
           <TextFieldGeneral
               value = {name}
-              setValue = {setName}
+              onValueChange= { onProductNameChange }
               label = "Product name"
               errorMessage = "Product name could not be empty"
               error = {name.length === 0 }
@@ -63,6 +68,7 @@ export function UpdateProductForm({ onClose, productId }) {
               label = "Select category"
               error={!categoryID}
               errorMessage = 'Select category of product'
+              onChange={onCategoryChange}
           >
               {catagories.map((category) => (
                   <MenuItem key={category._id} value={category._id}>
@@ -72,7 +78,7 @@ export function UpdateProductForm({ onClose, productId }) {
           </SelectorGeneral>
           <TextFieldGeneral
               value = {price}
-              setValue = {setPrice}
+              onValueChange = {onPriceChange}
               label = "Product  price"
               errorMessage = "Product price could not be negative"
               error = {price < 0 }
@@ -80,7 +86,7 @@ export function UpdateProductForm({ onClose, productId }) {
           />
           <TextFieldGeneral
               value = {quantity}
-              setValue = {setQuantity}
+              onValueChange = {onQuantityChange}
               label = "Product  quantity"
               errorMessage = "Product quantity could not be negative"
               error = {quantity < 0 }

@@ -1,10 +1,6 @@
 import {FormControl, FormHelperText, InputLabel, Select} from "@mui/material";
 
-export function SelectorGeneral({ value, setValue,label, error, errorMessage,children }) {
-    const onChange = (e) => {
-        setValue(e.target.value);
-    }
-    console.log(errorMessage)
+export function SelectorGeneral({ value, setValue,label, error, errorMessage,onChange,children }) {
     return (
         <FormControl sx={{minWidth: 200}}>
             <InputLabel

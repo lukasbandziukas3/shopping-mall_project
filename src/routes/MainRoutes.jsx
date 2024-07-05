@@ -6,39 +6,49 @@ import ProductsPage from "../pages/ProductsPage/ProductsPage";
 import OrdersPage from "../pages/OrdersPage/OrdersPage";
 import CartPage from "../pages/CartPage/CartPage";
 import UsersPage from "../pages/UserPage/UsersPage";
+import {LoginPage} from "../pages/Login/LoginPage";
 
 
 
 export const MainRoutes =   [
     {
         path: "/",
-        element: <Dasboard/>,
-        errorElement: <ErrorPage />,
+        errorElement: <ErrorPage/>,
         children: [
             {
                 path: '/',
-                element: <MainPage/>
+                element: <Dasboard/>,
+                children: [
+                    {
+                        path: '/',
+                        element: <MainPage/>
+                    },
+                    {
+                        path: '/categories',
+                        element: <CategoriesPage/>
+                    },
+                    {
+                        path: '/products',
+                        element: <ProductsPage/>
+                    },
+                    {
+                        path: '/orders',
+                        element: <OrdersPage/>
+                    },
+                    {
+                        path: '/users',
+                        element: <UsersPage/>
+                    },
+                    {
+                        path: '/cart',
+                        element: <CartPage/>
+                    },
+                ]
             },
             {
-                path: '/categories',
-                element: <CategoriesPage/>
-            },
-            {
-                path: '/products',
-                element: <ProductsPage/>
-            },
-            {
-                path: '/orders',
-                element: <OrdersPage/>
-            },
-            {
-                path: '/users',
-                element: <UsersPage/>
-            },
-            {
-                path: '/cart',
-                element: <CartPage/>
-            },
+                path: '/authorization',
+                element: <LoginPage/>
+            }
         ]
     }
 ]

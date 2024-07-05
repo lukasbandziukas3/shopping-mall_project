@@ -1,49 +1,47 @@
 import { useState, useCallback } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import { AddCategoryForm } from "./AddCategoryForm";
-import { UpdateCategoryForm } from "./UpdateCategoryForm";
+import {CategoryForm} from "./CategoryForm";
 import { CategoriesApearence } from "./CategoriesApearence";
+import {categoryAdded, categoryUpdated} from "./redux/thunk";
+import {useDispatch} from "react-redux";
 
 export function CategoriesList() {
-  const [isFormAddCategoryOpen, setIsFormAddCategoryOpen] = useState(false);
-  const [isFormUpdateCategoryOpen, setIsFormUpdateCategoryOpen] =
-    useState(false);
+  const [isFormCategoryOpen, setIsFormCategoryOpen] = useState(false);
   const [updateCategoryId, setUpdateCategoryId] = useState(null);
 
-  const openFormAddCategory = () => {
-    setIsFormAddCategoryOpen(true);
-  };
+  const dispatch = useDispatch();
 
-  const openFormUpdateCategory = useCallback((e) => {
+  const onSaveCategory = (name) => {
+    dispatch(categoryAdded(name));
+  }
+
+  const onUpdateCategory = ({name})=> {
+    dispatch( categoryUpdated( { categoryData:{name}, categoryID: updateCategoryId}));
+  }
+
+  const openFormCategory = useCallback((e) => {
     setUpdateCategoryId(e.target.getAttribute("data-category-id"));
-    setIsFormUpdateCategoryOpen(true);
+    setIsFormCategoryOpen(true);
   }, []);
 
-  const closeFormUpdateCategory = () => {
-    setIsFormUpdateCategoryOpen(false);
-  };
-
-  const closeFormAddCategory = () => {
-    setIsFormAddCategoryOpen(false);
+  const closeFormCategory = () => {
+    setUpdateCategoryId(null);
+    setIsFormCategoryOpen(false);
   };
   return (
     <Box sx={{ width: "100%" }}>
-      <CategoriesApearence onUpdate={openFormUpdateCategory} />
-      <Button sx={{ m: 5 }} variant="contained" onClick={openFormAddCategory}>
+      <CategoriesApearence onUpdate={openFormCategory} />
+      <Button sx={{ m: 5 }} variant="contained" onClick={openFormCategory}>
         Add new category
       </Button>
-      {isFormAddCategoryOpen && (
-        <AddCategoryForm
-          isOpen={isFormAddCategoryOpen}
-          onClose={closeFormAddCategory}
-        />
-      )}
-      {isFormUpdateCategoryOpen && (
-        <UpdateCategoryForm
-          isOpen={isFormUpdateCategoryOpen}
-          onClose={closeFormUpdateCategory}
-          categoryID={updateCategoryId}
+      {isFormCategoryOpen && (
+        <CategoryForm
+          isOpen={isFormCategoryOpen}
+          categoryID = {updateCategoryId}
+          onSubmit = {updateCategoryId ? onUpdateCategory : onSaveCategory}
+          formMessage ={updateCategoryId ? "update" : "add"}
+          onClose={closeFormCategory}
         />
       )}
     </Box>
