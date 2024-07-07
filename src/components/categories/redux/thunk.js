@@ -4,28 +4,65 @@ import {
   saveCategory,
   updateCategory,
 } from "../../../services/categories";
+import {toast} from "react-toastify";
+import {
+    addCategorySuccess,
+    getAllCategoriesSuccess,
+    getError,
+    getRequest,
+    updateCategorySuccess
+} from "./categoriesSlice";
 
 export const fetchCategories = createAsyncThunk(
-  "categories/fetchCategories",
-  async () => {
-    const response = await getAllCategories();
-    return response.data;
-  }
+    "categories/fetchCategories",
+    async (param, { dispatch, getState }) => {
+        dispatch(getRequest());
+        try {
+            const response = await getAllCategories();
+            if (response.data) {
+                dispatch(getAllCategoriesSuccess(response.data));
+            }
+        }
+        catch (error) {
+            toast.warning(`${error.data}`, { autoClose: 2500 });
+            dispatch(getError(error));
+        }
+    }
 );
 
-export const categoryAdded = createAsyncThunk(
-  "categories/categoryAdded",
-  async (category) => {
-    const response = await saveCategory(category);
-    return response.data;
-  }
+export const categoryAdded = createAsyncThunk (
+    "categories/categoryAdded",
+    async (category,{ dispatch, getState }) => {
+        dispatch(getRequest());
+        try {
+            const response = await saveCategory(category);
+            if (response) {
+                dispatch(addCategorySuccess(response.data));
+                toast.success(`category was added`, { autoClose: 2500 });
+            }
+        }
+        catch (error) {
+            toast.warning(`${error.data}`, { autoClose: 2500 });
+            dispatch(getError(error));
+        }
+    }
 );
 
 export const categoryUpdated = createAsyncThunk(
-  "categories/categoryUpdated",
-  async (category) => {
-    const  { categoryData, categoryID } = category
-    const  response = await updateCategory(categoryID,categoryData);
-    return response.data;
-  }
+    "categories/categoriesUpdated",
+    async (category,{ dispatch, getState }) => {
+        dispatch(getRequest());
+        try {
+            const {categoryID, categoryData} = category;
+            const response = await updateCategory(categoryID, categoryData);
+            if (response) {
+                dispatch(updateCategorySuccess(response.data));
+                toast.success(`Category was updated`, {autoClose: 2500});
+            }
+        }
+        catch (error) {
+            toast.warning(`${error.data}`, { autoClose: 2500 });
+            dispatch(getError(error));
+        }
+    }
 );

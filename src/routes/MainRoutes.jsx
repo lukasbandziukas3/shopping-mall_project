@@ -6,7 +6,8 @@ import ProductsPage from "../pages/ProductsPage/ProductsPage";
 import OrdersPage from "../pages/OrdersPage/OrdersPage";
 import CartPage from "../pages/CartPage/CartPage";
 import UsersPage from "../pages/UserPage/UsersPage";
-import {LoginPage} from "../pages/Login/LoginPage";
+import LoginPage from "../pages/Login/LoginPage";
+import LogoutPage from "../pages/Logout/LogoutPage";
 
 
 
@@ -42,6 +43,10 @@ export const MainRoutes =   [
                     {
                         path: '/cart',
                         element: <CartPage/>
+                    },
+                    {
+                        path: '/logout',
+                        element: <LogoutPage/>
                     },
                 ]
             },

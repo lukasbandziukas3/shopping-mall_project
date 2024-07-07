@@ -13,6 +13,10 @@ export function AddProductToCartForm({ onClose, productId }) {
 
   const [quantity, setQuantity] = useState(1);
 
+  const onChangeQuantity = (e)=>{
+      setQuantity(e.target.value);
+  }
+
   const onBuyProduct = () => {
     if (quantity < 1 || quantity > product.quantity) {
       return;
@@ -43,6 +47,7 @@ export function AddProductToCartForm({ onClose, productId }) {
               errorMessage = {errorMessage}
               error = { quantity < 1 || quantity > product.quantity }
               type = 'number'
+              onValueChange={onChangeQuantity}
           />
       </FormGeneral>
   );

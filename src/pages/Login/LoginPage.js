@@ -1,4 +1,4 @@
-import {useEffect, useLayoutEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {CustomProgress} from "../../components/shared/CustomProgress";
@@ -7,17 +7,13 @@ import {TextFieldGeneral} from "../../components/shared/generalComponets/TextFie
 import {userLogin} from "../../components/auth/redux/thunk";
 import Typography from "@mui/material/Typography";
 
-export const LoginPage = () => {
+export default function LoginPage () {
     const {status,err} = useSelector((state) => state.auth);
     const [userName, setUserName] = useState('');
     const [password, setPassword] = useState('');
     const [isError, setIsError] = useState(false);
     const navigate = useNavigate();
     const dispatch = useDispatch();
-
-    useEffect(()=>{
-        setIsError(false)
-    },[userName, password])
 
     const onUserNameChange = (event) => {
         setIsError(false)
@@ -29,14 +25,14 @@ export const LoginPage = () => {
         setPassword(event.target.value);
     }
 
-    useLayoutEffect(() => {
+    useEffect(() => {
         if(status === "succeeded") {
-            navigate('/products');
+            navigate('/');
         }
         if(status === "failed"){
             setIsError(true);
         }
-    }, [status]);
+    }, [status, navigate]);
 
     const  handleSubmit =  (e) => {
        if(!userName || !password){

@@ -1,6 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { updateProductQuantity } from "../../products/redux/productsSlice";
 import { orderAdded } from "../../orders/redux/thunk";
+import {addOrder, deleteOrder} from "./cartSlice";
 
 export const cancelOrderFromCart = createAsyncThunk(
   "cart/cancelOrder",
@@ -14,6 +15,7 @@ export const cancelOrderFromCart = createAsyncThunk(
         })
       )
     );
+    dispatch(deleteOrder());
   }
 );
 
@@ -26,7 +28,7 @@ export const addedOrderToCart = createAsyncThunk(
         quantityDef: -product.productQuantity,
       })
     );
-    return product;
+    dispatch(addOrder( product));
   }
 );
 

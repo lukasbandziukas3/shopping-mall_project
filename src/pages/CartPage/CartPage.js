@@ -9,7 +9,7 @@ export default function CartPage() {
   if (status === "loading") {
     content = <CustomProgress />;
   }
-  if (status === "succeeded" || status === "idle") {
+  else  {
     content = <CartList />;
   }
   return <>{content}</>;

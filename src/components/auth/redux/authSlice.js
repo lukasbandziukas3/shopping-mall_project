@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import {userLogin} from "./thunk";
 
 const initialState = {
     token: null,
@@ -10,24 +9,30 @@ const initialState = {
 const authSlice = createSlice({
     name: 'auth',
     initialState,
-    reducers: {},
-    extraReducers(builder) {
-        builder
-            .addCase(userLogin.pending, (state, action) => {
-                state.status = "loading";
-            })
-            .addCase(userLogin.fulfilled, (state, action) => {
-                state.status = "succeeded";
-                const { accessToken } = action.payload;
-                state.token = accessToken;
-
-            })
-            .addCase(userLogin.rejected, (state, action) => {
-                state.status = "failed";
-                state.err = action.payload?.message;
-            })
-    },
+    reducers: {
+        getRequest: (state) => {
+            state.status = 'loading';
+        },
+        getLogoutSuccess: (state, action) => {
+            state.status = "succeeded";
+            state.token = null;
+        },
+        getAuthSuccess: (state, action) => {
+            state.status = "succeeded";
+            state.token = action.payload.accessToken;
+        },
+        getError: (state, action) => {
+            state.status = "failed";
+            state.err = action.payload;
+        }},
 })
+
+export const {
+               getRequest,
+               getLogoutSuccess,
+               getAuthSuccess,
+               getError
+} = authSlice.actions;
 
 export default authSlice.reducer;
 
