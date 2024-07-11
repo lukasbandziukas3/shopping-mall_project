@@ -13,7 +13,8 @@ export const userLogin = createAsyncThunk(
        try{
         const response = await sendLogin(userData);
            if (response.data) {
-               dispatch(getAuthSuccess(response.data));
+               localStorage.setItem("jwtToken", response.data.accessToken);
+               dispatch(getAuthSuccess());
            }
     } catch (error) {
            dispatch(getError(error.response.statusText));
@@ -27,6 +28,7 @@ export const userLogout = createAsyncThunk(
        try {
            dispatch(getRequest());
            await sendLogout();
+           localStorage.removeItem("jwtToken");
            dispatch(getLogoutSuccess());
        }
        catch (error) {

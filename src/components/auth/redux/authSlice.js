@@ -1,7 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    token: null,
     status: "idle",
     err: null,
 };
@@ -14,12 +13,10 @@ const authSlice = createSlice({
             state.status = 'loading';
         },
         getLogoutSuccess: (state, action) => {
-            state.status = "succeeded";
-            state.token = null;
+            state.status = "idle";
         },
         getAuthSuccess: (state, action) => {
             state.status = "succeeded";
-            state.token = action.payload.accessToken;
         },
         getError: (state, action) => {
             state.status = "failed";
