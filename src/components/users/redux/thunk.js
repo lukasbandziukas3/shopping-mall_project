@@ -18,7 +18,7 @@ export const fetchUsers = createAsyncThunk(
                 dispatch(getAllUsersSuccess(response.data));
             }
         } catch (error) {
-            toast.warning(`${error.data}`, {autoClose: 2500});
+            toast.warning(`${error}`, {autoClose: 2500});
             dispatch(getError(error));
         }
     }
@@ -44,7 +44,7 @@ export const userUpdated = createAsyncThunk(
                 dispatch(updateUserSuccess(response.data));
             }
         } catch (error) {
-            toast.warning(`${error.data}`, {autoClose: 2500});
+            toast.warning(`${error}`, {autoClose: 2500});
             dispatch(getError(error));
         }
     }
@@ -61,7 +61,7 @@ export const userDeleted = createAsyncThunk(
                 dispatch(deleteUserSuccess(response.data));
             }
        } catch (error) {
-            toast.warning(`${error.data}`, {autoClose: 2500});
+            toast.warning(`${error}`, {autoClose: 2500});
             dispatch(getError(error));
         }
    }

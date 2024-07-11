@@ -15,8 +15,8 @@ export const fetchOrders = createAsyncThunk(
             }
         }
         catch (error) {
-            toast.warning(`${error.data}`, { autoClose: 2500 });
-            dispatch(getError(error.response.data));
+            toast.warning(`${error}`, { autoClose: 2500 });
+            dispatch(getError(error));
         }
     }
 );
@@ -33,9 +33,9 @@ export const orderAdded = createAsyncThunk(
           }
       }
       catch (error) {
-          toast.warning(`${error.response.data}`, { autoClose: 2500 });
+          toast.warning(`${error}`, { autoClose: 2500 });
 
-          dispatch(getError(error.response.data));
+          dispatch(getError(error));
       }
   }
 );

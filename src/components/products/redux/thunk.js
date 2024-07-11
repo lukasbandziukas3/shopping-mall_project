@@ -24,7 +24,7 @@ export const fetchProducts = createAsyncThunk(
         }
     }
     catch (error) {
-        toast.warning(`${error.data}`, { autoClose: 2500 });
+        toast.warning(`${error}`, { autoClose: 2500 });
         dispatch(getError(error));
     }
   }
@@ -38,11 +38,11 @@ export const productAdded = createAsyncThunk (
           const response = await saveProduct(product);
           if (response) {
               dispatch(addProductSuccess(response.data));
-              toast.success(`User was added`, { autoClose: 2500 });
+              toast.success(`Product was added`, { autoClose: 2500 });
           }
       }
       catch (error) {
-          toast.warning(`${error.data}`, { autoClose: 2500 });
+          toast.warning(`${error}`, { autoClose: 2500 });
           dispatch(getError(error));
       }
   }
@@ -57,11 +57,11 @@ export const productUpdated = createAsyncThunk(
           const response = await updateProduct(productId, productData);
           if (response) {
               dispatch(updateProductSuccess(response.data));
-              toast.success(`User was updated`, {autoClose: 2500});
+              toast.success(`Product was updated`, {autoClose: 2500});
           }
       }
       catch (error) {
-          toast.warning(`${error.data}`, { autoClose: 2500 });
+          toast.warning(`${error}`, { autoClose: 2500 });
           dispatch(getError(error));
       }
   }

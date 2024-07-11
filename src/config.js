@@ -62,7 +62,7 @@ apiInstance.interceptors.response.use(async (response) => {
         refreshAndRetryQueue.push({ config: originalRequest, resolve, reject });
       });
     }
-  return Promise.reject(err);
+  return Promise.reject(err.response.data.error);
   });
 
 export default apiInstance;

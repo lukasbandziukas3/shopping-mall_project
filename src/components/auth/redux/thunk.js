@@ -32,7 +32,7 @@ export const userLogout = createAsyncThunk(
            dispatch(getLogoutSuccess());
        }
        catch (error) {
-           toast.warning(`${error.data}`, { autoClose: 2500 });
+           toast.warning(`${error}`, { autoClose: 2500 });
            dispatch(getError(error));
        }
     }

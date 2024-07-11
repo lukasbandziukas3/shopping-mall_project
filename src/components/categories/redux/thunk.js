@@ -24,7 +24,7 @@ export const fetchCategories = createAsyncThunk(
             }
         }
         catch (error) {
-            toast.warning(`${error.data}`, { autoClose: 2500 });
+            toast.warning(`${error}`, { autoClose: 2500 });
             dispatch(getError(error));
         }
     }
@@ -42,7 +42,7 @@ export const categoryAdded = createAsyncThunk (
             }
         }
         catch (error) {
-            toast.warning(`${error.data}`, { autoClose: 2500 });
+            toast.warning(`${error}`, { autoClose: 2500 });
             dispatch(getError(error));
         }
     }
@@ -61,7 +61,7 @@ export const categoryUpdated = createAsyncThunk(
             }
         }
         catch (error) {
-            toast.warning(`${error.data}`, { autoClose: 2500 });
+            toast.warning(`${error}`, { autoClose: 2500 });
             dispatch(getError(error));
         }
     }
