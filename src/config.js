@@ -28,7 +28,7 @@ apiInstance.interceptors.request.use(async (config) => {
 apiInstance.interceptors.response.use(async (response) => {
     return response;
 },async (err)=>{
-  if(err.response.status === 403){
+  if(err.response?.status === 403){
     if(err.request.responseURL.includes("refresh")){
       localStorage.removeItem("jwtToken");
       err.response.data.message = "Your login has expired";
@@ -40,7 +40,7 @@ apiInstance.interceptors.response.use(async (response) => {
       isRefreshing = true;
       try {
         const response = await sendRefreshToken();
-        if (response.data) {
+        if (response?.data) {
           localStorage.setItem("jwtToken", response.data.accessToken);
           refreshAndRetryQueue.forEach(({ config, resolve, reject }) => {
             apiInstance
@@ -62,7 +62,7 @@ apiInstance.interceptors.response.use(async (response) => {
         refreshAndRetryQueue.push({ config: originalRequest, resolve, reject });
       });
     }
-  return Promise.reject(err.response.data.error);
+  return Promise.reject(err.response?.data.error);
   });
 
 export default apiInstance;

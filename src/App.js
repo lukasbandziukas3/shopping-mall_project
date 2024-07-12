@@ -8,7 +8,9 @@ import ToastProvider from './contexts/ToastContext';
 function App() {
     const status = useSelector((state) => state.auth.status);
     useEffect(() => {
-        if(status !== 'succeeded' && window.location.pathname !== "/authorization" && !localStorage.getItem("jwtToken")){
+        if(status !== 'succeeded' && window.location.pathname !== "/authorization" &&
+            !localStorage.getItem("jwtToken" ) && window.location.pathname !== "/singUp")
+        {
             window.location = "/authorization";
         }
     }, [status]);

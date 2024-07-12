@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {CustomProgress} from "../../components/shared/CustomProgress";
 import {Button, Card, CardActions, CardContent, CardHeader} from "@mui/material";
@@ -28,9 +28,6 @@ export default function LoginPage () {
     useEffect(() => {
         if(status === "succeeded") {
             navigate('/');
-        }
-        if(status === "failed"){
-            setIsError(true);
         }
     }, [status, navigate]);
 
@@ -66,6 +63,7 @@ export default function LoginPage () {
                         />
                     </>
                 )}
+                <Link to="/singUp">sign up</Link>
                 <Button
                     sx = {{alignSelf: "end"}}
                     variant="contained"

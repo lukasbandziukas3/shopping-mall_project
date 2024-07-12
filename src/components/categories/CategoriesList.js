@@ -4,11 +4,13 @@ import Button from "@mui/material/Button";
 import {CategoryForm} from "./CategoryForm";
 import { CategoriesApearence } from "./CategoriesApearence";
 import {categoryAdded, categoryUpdated} from "./redux/thunk";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 
 export function CategoriesList() {
   const [isFormCategoryOpen, setIsFormCategoryOpen] = useState(false);
   const [updateCategoryId, setUpdateCategoryId] = useState(null);
+
+  const roles = useSelector(state => state.auth.roles )
 
   const dispatch = useDispatch();
 
@@ -32,9 +34,12 @@ export function CategoriesList() {
   return (
     <Box sx={{ width: "100%" }}>
       <CategoriesApearence onUpdate={openFormCategory} />
+
+      { roles.includes('manager') &&
       <Button sx={{ m: 5 }} variant="contained" onClick={openFormCategory}>
         Add new category
       </Button>
+      }
       {isFormCategoryOpen && (
         <CategoryForm
           isOpen={isFormCategoryOpen}

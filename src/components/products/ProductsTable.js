@@ -1,4 +1,4 @@
-import { memo } from "react";
+import {memo} from "react";
 import { useSelector } from "react-redux";
 import {
   Table,
@@ -12,7 +12,7 @@ import {
 
 export const ProductsTable = memo(({ onProductUpdate, onProductBuy }) => {
   const products = useSelector((state) => state.products.products);
-
+  const roles = useSelector(state => state.auth.roles )
   return (
     <TableContainer>
       <Table>
@@ -40,13 +40,17 @@ export const ProductsTable = memo(({ onProductUpdate, onProductBuy }) => {
               <TableCell sx={{ flex: 1 }}>{product.price}</TableCell>
               <TableCell sx={{ flex: 1 }}>{product.category.name}</TableCell>
               <TableCell sx={{ flex: 2 }} align="center">
-                <Button
-                  onClick={onProductUpdate}
-                  data-product-id={product._id}
-                  variant="contained"
-                >
-                  edit
-                </Button>
+
+                { roles.includes('manager') &&
+                    ( <Button
+                        onClick={onProductUpdate}
+                        data-product-id={product._id}
+                        variant="contained"
+                      >
+                        edit
+                      </Button>
+                    )
+                }
                 <Button
                   sx={{ ml: 1 }}
                   data-product-id={product._id}

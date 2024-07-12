@@ -3,9 +3,10 @@ import {Box, Button} from "@mui/material";
 
 import { ProductsTable } from "./ProductsTable";
 import { Form } from "./Form";
+import {useSelector} from "react-redux";
 
 export function ProductsList() {
-
+  const roles = useSelector(state => state.auth.roles )
   const [openFormName, setOpenFormName] = useState("");
   const [currentProductId, setCurrentProductId] = useState(null);
 
@@ -30,9 +31,13 @@ export function ProductsList() {
         onProductUpdate={openFormProduct}
         onProductBuy={openFormAddProductToCart}
       />
-      <Button sx={{ m: 5 }} variant="contained" onClick={openFormProduct}>
-        Add new Product
-      </Button>
+        {
+             roles.includes('manager') &&
+                 ( <Button sx={{ m: 5 }} variant="contained" onClick={openFormProduct}>
+                      Add new Product
+                  </Button>
+                 )
+        }
       <Form
         formType={openFormName}
         productId={currentProductId}

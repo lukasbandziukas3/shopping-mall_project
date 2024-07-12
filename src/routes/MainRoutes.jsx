@@ -8,7 +8,8 @@ import CartPage from "../pages/CartPage/CartPage";
 import UsersPage from "../pages/UserPage/UsersPage";
 import LoginPage from "../pages/Login/LoginPage";
 import LogoutPage from "../pages/Logout/LogoutPage";
-
+import SignUpPage from "../pages/SignUpPage/SignUpPage";
+import { RequireAuth } from "../components/auth/RequireAuth";
 
 
 export const MainRoutes =   [
@@ -22,37 +23,59 @@ export const MainRoutes =   [
                 children: [
                     {
                         path: '/',
-                        element: <MainPage/>
+                        element: <RequireAuth allowedRoles = {['customer','manager', 'admin']}/>,
+                        children: [
+                            {
+                                path: '/',
+                                element: <MainPage/>
+                            },
+                            {
+                                path: '/categories',
+                                element: <CategoriesPage/>
+                            },
+                            {
+                                path: '/products',
+                                element: <ProductsPage/>
+                            },
+                            {
+                                path: '/cart',
+                                element: <CartPage/>
+                            },
+                            {
+                                path: '/logout',
+                                element: <LogoutPage/>
+                            },
+                        ]
                     },
                     {
-                        path: '/categories',
-                        element: <CategoriesPage/>
+                        path: '/',
+                        element: <RequireAuth allowedRoles = {['manager']}/>,
+                        children: [
+                            {
+                                path: '/orders',
+                                element: <OrdersPage/>
+                            }
+                        ]
                     },
                     {
-                        path: '/products',
-                        element: <ProductsPage/>
-                    },
-                    {
-                        path: '/orders',
-                        element: <OrdersPage/>
-                    },
-                    {
-                        path: '/users',
-                        element: <UsersPage/>
-                    },
-                    {
-                        path: '/cart',
-                        element: <CartPage/>
-                    },
-                    {
-                        path: '/logout',
-                        element: <LogoutPage/>
-                    },
+                        path: '/',
+                        element: <RequireAuth allowedRoles = {['admin']}/>,
+                        children: [
+                            {
+                                path: '/users',
+                                element: <UsersPage/>
+                            },
+                        ]
+                    }
                 ]
             },
             {
                 path: '/authorization',
                 element: <LoginPage/>
+            },
+            {
+                path: '/singUp',
+                element: <SignUpPage/>
             }
         ]
     }

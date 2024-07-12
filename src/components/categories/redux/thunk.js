@@ -36,6 +36,7 @@ export const categoryAdded = createAsyncThunk (
         dispatch(getRequest());
         try {
             const response = await saveCategory(category);
+             console.log(response,"response")
             if (response) {
                 dispatch(addCategorySuccess(response.data));
                 toast.success(`category was added`, { autoClose: 2500 });

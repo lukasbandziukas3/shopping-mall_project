@@ -12,12 +12,13 @@ import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 
 import { BadgeBottomNavigationAction } from "./BadgeBottomNavigationAction";
+import {useSelector} from "react-redux";
 
 export function NavigationPanel() {
   const navigate = useNavigate();
   const location = useLocation();
   const [value, setValue] = useState();
-
+  const roles = useSelector(state => state.auth.roles )
   useEffect(() => {
     setValue(location.pathname);
   }, [location.pathname]);
@@ -51,20 +52,28 @@ export function NavigationPanel() {
         label="categories"
         icon={<CategoryIcon />}
       />
-      <BottomNavigationAction
-        to="/orders"
-        value="/orders"
-        component={Link}
-        label="orders"
-        icon={<OrdersIcon />}
-      />
-      <BottomNavigationAction
-          to="/users"
-          value="/users"
-          component={Link}
-          label="users"
-          icon={<Person4Icon />}
-      />
+      {
+          roles.includes('manager')  && (
+          <BottomNavigationAction
+            to="/orders"
+            value="/orders"
+            component={Link}
+            label="orders"
+            icon={<OrdersIcon />}
+          />
+          )
+      }
+      {
+          roles.includes('admin')  && (
+          <BottomNavigationAction
+              to="/users"
+              value="/users"
+              component={Link}
+              label="users"
+              icon={<Person4Icon />}
+          />
+          )
+      }
       <BottomNavigationAction
       to="/logout"
       value="/logout"
