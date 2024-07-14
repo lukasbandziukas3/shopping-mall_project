@@ -19,14 +19,12 @@ const authSlice = createSlice({
             state.status = "idle";
             state.userName = '';
             state.roles = [];
-            state.activeStatus = false;
         },
         getAuthSuccess: (state, action) => {
             state.status = "succeeded";
-            const {activeStatus, roles, nickName} = action.payload.UserInfo;
+            const { roles, nickName} = action.payload.UserInfo;
             state.userName = nickName;
             state.roles = roles;
-            state.activeStatus = activeStatus;
         },
         getError: (state, action) => {
             state.status = "failed";
@@ -38,7 +36,7 @@ export const {
                getRequest,
                getLogoutSuccess,
                getAuthSuccess,
-               getError
+               getError,
 } = authSlice.actions;
 
 export default authSlice.reducer;

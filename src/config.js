@@ -28,7 +28,7 @@ apiInstance.interceptors.request.use(async (config) => {
 apiInstance.interceptors.response.use(async (response) => {
     return response;
 },async (err)=>{
-  if(err.response?.status === 403){
+  if(err.response?.status === 401){
     if(err.request.responseURL.includes("refresh")){
       localStorage.removeItem("jwtToken");
       err.response.data.message = "Your login has expired";
