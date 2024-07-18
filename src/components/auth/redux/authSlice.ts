@@ -1,32 +1,37 @@
-import { createSlice } from "@reduxjs/toolkit";
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {BaseState, Roles, TokenInfo} from "../../../interfaces/globalTypes";
 
-const initialState = {
+export interface AuthState extends BaseState{
+    roles: Roles[],
+    userName: string,
+}
+
+const initialState: AuthState = {
     status: "idle",
     roles: [],
     userName:"",
-    activeStatus: false,
     err: null,
 };
 
-const authSlice = createSlice({
+ const authSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
         getRequest: (state) => {
             state.status = 'loading';
         },
-        getLogoutSuccess: (state, action) => {
+        getLogoutSuccess: (state) => {
             state.status = "idle";
             state.userName = '';
             state.roles = [];
         },
-        getAuthSuccess: (state, action) => {
+        getAuthSuccess: (state, action: PayloadAction<TokenInfo>) => {
             state.status = "succeeded";
             const { roles, nickName} = action.payload.UserInfo;
             state.userName = nickName;
             state.roles = roles;
         },
-        getError: (state, action) => {
+        getError: (state, action: PayloadAction<string>) => {
             state.status = "failed";
             state.err = action.payload;
         }},
@@ -41,4 +46,3 @@ export const {
 
 export default authSlice.reducer;
 
-export const selectCurrentToken = (state) => state.auth.token;

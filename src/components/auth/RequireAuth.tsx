@@ -1,24 +1,26 @@
 import {Navigate, Outlet, useLocation} from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
 import {useEffect} from "react";
 import {jwtDecode} from "jwt-decode";
 import {getAuthSuccess,} from "./redux/authSlice";
 import {CustomProgress} from "../shared/CustomProgress";
+import {Roles, TokenInfo} from "../../interfaces/globalTypes";
+import {useAppDispatch, useAppSelector} from "../../hooks/reduxHooksTS";
 
 
-export const RequireAuth = ({allowedRoles}) => {
+export const RequireAuth  = ({allowedRoles} :{allowedRoles: Roles[]}) => {
     const location = useLocation();
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
-    const {roles, status} = useSelector(state => state.auth);
-
+    const {roles, status} = useAppSelector(state  => state.auth);
 
     useEffect(() => {
-        if(status  === "idle" && localStorage.getItem("jwtToken")){
-              const decodedToken = jwtDecode(localStorage.getItem("jwtToken"));
+        const token = localStorage.getItem("jwtToken");
+        if(status  === "idle" && token){
+              const decodedToken = jwtDecode<TokenInfo>(token);
+              console.log(decodedToken,"token")
               dispatch(getAuthSuccess(decodedToken))
           }
-    }, [status]);
+    }, [status, dispatch]);
 
     if(status === 'idle' && localStorage.getItem("jwtToken")    ) {
         return <CustomProgress/>;

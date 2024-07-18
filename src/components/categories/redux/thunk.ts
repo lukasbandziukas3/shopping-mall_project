@@ -12,58 +12,73 @@ import {
     getRequest,
     updateCategorySuccess
 } from "./categoriesSlice";
+import {Category} from "../../../interfaces/globalTypes";
 
 export const fetchCategories = createAsyncThunk(
     "categories/fetchCategories",
-    async (param, { dispatch, getState }) => {
+    async (_param :undefined, { dispatch }) => {
         dispatch(getRequest());
         try {
             const response = await getAllCategories();
             if (response.data) {
-                dispatch(getAllCategoriesSuccess(response.data));
+                dispatch(getAllCategoriesSuccess(response.data as Category[])  );
             }
         }
         catch (error) {
-            toast.warning(`${error}`, { autoClose: 2500 });
-            dispatch(getError(error));
+           if (typeof  error === "string") {
+               toast.warning(`${error}`, {autoClose: 2500});
+               dispatch(getError(error ))
+           }
+           else {
+               console.error(error)
+           }
         }
     }
 );
 
 export const categoryAdded = createAsyncThunk (
     "categories/categoryAdded",
-    async (category,{ dispatch, getState }) => {
+    async (category:string,{ dispatch}) => {
         dispatch(getRequest());
         try {
             const response = await saveCategory(category);
-             console.log(response,"response")
             if (response) {
-                dispatch(addCategorySuccess(response.data));
+                dispatch(addCategorySuccess(response.data as Category));
                 toast.success(`category was added`, { autoClose: 2500 });
             }
         }
         catch (error) {
-            toast.warning(`${error}`, { autoClose: 2500 });
-            dispatch(getError(error));
+            if (typeof  error === "string") {
+                toast.warning(`${error}`, {autoClose: 2500});
+                dispatch(getError(error));
+            }
+            else {
+                console.error(error)
+            }
         }
     }
 );
 
 export const categoryUpdated = createAsyncThunk(
     "categories/categoriesUpdated",
-    async (category,{ dispatch, getState }) => {
+    async (category:Category,{ dispatch}) => {
         dispatch(getRequest());
         try {
-            const {categoryID, categoryData} = category;
-            const response = await updateCategory(categoryID, categoryData);
+            const {_id, name} = category;
+            const response = await updateCategory(_id, name);
             if (response) {
                 dispatch(updateCategorySuccess(response.data));
                 toast.success(`Category was updated`, {autoClose: 2500});
             }
         }
         catch (error) {
-            toast.warning(`${error}`, { autoClose: 2500 });
-            dispatch(getError(error));
+            if (typeof  error === "string") {
+                toast.warning(`${error}`, {autoClose: 2500});
+                dispatch(getError(error));
+            }
+            else {
+                console.error(error)
+            }
         }
     }
 );

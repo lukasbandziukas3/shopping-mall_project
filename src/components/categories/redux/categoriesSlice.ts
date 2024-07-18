@@ -1,6 +1,11 @@
-import { createSlice } from "@reduxjs/toolkit";
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {BaseState, Category} from "../../../interfaces/globalTypes";
 
-const initialState = {
+export interface CategoryState extends BaseState{
+  categories: Category[]
+}
+
+const initialState: CategoryState = {
   categories: [],
   status: "idle",
   err: null,
@@ -13,15 +18,15 @@ const categoriesSlice = createSlice({
     getRequest: (state) => {
       state.status = 'loading';
     },
-    getAllCategoriesSuccess: (state, action) => {
+    getAllCategoriesSuccess: (state, action: PayloadAction<Category[]>) => {
       state.status = "succeeded";
       state.categories = action.payload;
     },
-    addCategorySuccess: (state, action) => {
+    addCategorySuccess: (state, action: PayloadAction<Category>) => {
       state.status = "succeeded";
       state.categories.push(action.payload);
     },
-    updateCategorySuccess: (state, action) => {
+    updateCategorySuccess: (state,  action: PayloadAction<Category>) => {
       state.status = "succeeded";
       const { _id, name } = action.payload;
       const existingCategory = state.categories.find(
@@ -31,7 +36,7 @@ const categoriesSlice = createSlice({
         existingCategory.name = name;
       }
     },
-    getError: (state, action) => {
+    getError: (state,  action: PayloadAction<string>) => {
       state.status = "failed";
       state.err = action.payload;
     },

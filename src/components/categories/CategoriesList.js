@@ -19,7 +19,7 @@ export function CategoriesList() {
   }
 
   const onUpdateCategory = ({name})=> {
-    dispatch( categoryUpdated( { categoryData:{name}, categoryID: updateCategoryId}));
+    dispatch( categoryUpdated( {name, _id: updateCategoryId}));
   }
 
   const openFormCategory = useCallback((e) => {

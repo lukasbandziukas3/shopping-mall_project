@@ -10,9 +10,19 @@ import LoginPage from "../pages/Login/LoginPage";
 import LogoutPage from "../pages/Logout/LogoutPage";
 import SignUpPage from "../pages/SignUpPage/SignUpPage";
 import { RequireAuth } from "../components/auth/RequireAuth";
+import React from "react";
+
+interface Route {
+    caseSensitive?: boolean;
+    children?: Route[];
+    errorElement?: React.ReactElement;
+    element?: React.ReactElement;
+    index?: false;
+    path?: string;
+}
 
 
-export const MainRoutes =   [
+export const MainRoutes: Route[] =   [
     {
         path: "/",
         errorElement: <ErrorPage/>,

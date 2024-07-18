@@ -1,13 +1,13 @@
 import { CategoriesList } from "../../components/categories/CategoriesList";
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import {ReactElement, useEffect} from "react";
 import { fetchCategories } from "../../components/categories/redux/thunk";
 import {CustomProgress} from "../../components/shared/CustomProgress";
 import {Box} from "@mui/material";
+import {useAppDispatch, useAppSelector} from "../../hooks/reduxHooksTS";
 
-export default function CategoriesPage() {
-  const status = useSelector((state) => state.categories.status);
-  const dispatch = useDispatch();
+export default function CategoriesPage(): ReactElement {
+  const status = useAppSelector(state => state.categories.status);
+  const dispatch = useAppDispatch();
   useEffect(() => {
     if (status === "idle") {
       dispatch(fetchCategories());
