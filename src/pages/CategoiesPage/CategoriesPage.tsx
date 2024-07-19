@@ -1,5 +1,5 @@
 import { CategoriesList } from "../../components/categories/CategoriesList";
-import {ReactElement, useEffect} from "react";
+import React, {ReactElement, useEffect} from "react";
 import { fetchCategories } from "../../components/categories/redux/thunk";
 import {CustomProgress} from "../../components/shared/CustomProgress";
 import {Box} from "@mui/material";
@@ -13,7 +13,7 @@ export default function CategoriesPage(): ReactElement {
       dispatch(fetchCategories());
     }
   }, [status, dispatch]);
-  let content
+  let content: React.ReactNode;
   if (status === "loading" || status === "idle") {
     content = <CustomProgress/>
   }

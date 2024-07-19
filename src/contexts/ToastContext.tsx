@@ -1,11 +1,15 @@
-import { createContext } from 'react';
+import React, {createContext, ReactNode} from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-export const ToastContext = createContext();
+interface ToastContextType {
+    showToast: (str: string, type: 'success' | 'error') => number | string;
+}
 
-const ToastProvider = ({ children }) => {
-    const showToast = (str, type) => {
+export const ToastContext = createContext<ToastContextType | undefined>(undefined);
+
+const ToastProvider:  React.FC<{children:ReactNode }> = ({ children }) => {
+    const showToast = (str:string, type: "success" | "error"):number | string => {
         switch (type) {
             case 'success':
                 return toast.success(str, {

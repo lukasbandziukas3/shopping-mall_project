@@ -14,8 +14,23 @@
     password: string;
  }
 
- export interface SingnUp extends Login {
+ export interface SingUp extends Login {
      passwordConfirmed: string;
+ }
+
+ export interface Order {
+     _id: string;
+     customer: User,
+     orderDate: Date,
+     products: Product[],
+ }
+
+ export interface Product{
+    _id: string;
+    name: string,
+     quantity: number,
+     price: number,
+     category: Category,
  }
 
  export type Roles = 'customer'| 'manager' | 'admin'
@@ -27,5 +42,12 @@
          exp: number,
          iat: number
      }
+ }
+
+ export interface User  {
+     _id: string;
+     nickName: string;
+     roles: Roles[],
+     activeStatus: boolean
  }
 

@@ -2,16 +2,18 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { updateProductQuantity } from "../../products/redux/productsSlice";
 import { orderAdded } from "../../orders/redux/thunk";
 import {addOrder, deleteOrder} from "./cartSlice";
+import {RootState} from "../../../app/store";
+import {Product} from "../../../interfaces/globalTypes";
 
-export const cancelOrderFromCart = createAsyncThunk(
+export const cancelOrderFromCart =  createAsyncThunk<void, void, {state: RootState }>(
   "cart/cancelOrder",
-  async (arg, { dispatch, getState }) => {
+  async (_param, { dispatch, getState }) => {
     const ordersInCart = getState().cart.orders;
     ordersInCart.forEach((order) =>
       dispatch(
         updateProductQuantity({
-          productId: order.productId,
-          quantityDef: order.productQuantity,
+          productId: order._id,
+          quantityDef: order.quantity,
         })
       )
     );
@@ -21,28 +23,28 @@ export const cancelOrderFromCart = createAsyncThunk(
 
 export const addedOrderToCart = createAsyncThunk(
   "cart/orderAddedTocart",
-  async (product, { dispatch, getState }) => {
+  async (product:Product, { dispatch}) => {
     dispatch(
       updateProductQuantity({
-        productId: product.productId,
-        quantityDef: -product.productQuantity,
+        productId: product._id,
+        quantityDef: -product.quantity,
       })
     );
     dispatch(addOrder( product));
   }
 );
 
-export const makePurchase = createAsyncThunk(
+export const makePurchase = createAsyncThunk<void, void, {state: RootState }>(
   "cart/makePurchase",
-  async (arg, { dispatch, getState }) => {
+  async (_param, { dispatch, getState }) => {
     const ordersInCart = getState().cart.orders;
-    const productsForPurchase = [];
+    const productsForPurchase: Pick<Product,"_id" | "quantity">[] = [];
     ordersInCart.forEach((order) =>
       productsForPurchase.push({
-        productId: order.productId,
-        quantity: order.productQuantity,
+        _id: order._id,
+        quantity: order.quantity,
       })
     );
-    dispatch(orderAdded({ products: productsForPurchase }));
+    dispatch(orderAdded(productsForPurchase));
   }
 );

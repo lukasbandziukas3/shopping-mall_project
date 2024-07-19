@@ -1,33 +1,33 @@
-import {useEffect, useState} from "react";
+import React, {ReactElement, useEffect, useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
 import {CustomProgress} from "../../components/shared/CustomProgress";
 import {Button, Card, CardActions, CardContent, CardHeader} from "@mui/material";
 import {TextFieldGeneral} from "../../components/shared/generalComponets/TextFieldGeneral";
 import { userSignUp} from "../../components/auth/redux/thunk";
 import Typography from "@mui/material/Typography";
+import {useAppDispatch, useAppSelector} from "../../hooks/reduxHooksTS";
 
-export default function SignUpPage () {
-    const {status,err} = useSelector((state) => state.auth);
-    const [userName, setUserName] = useState('');
-    const [password, setPassword] = useState('');
-    const [passwordConfirmed, setPasswordConfirmed] = useState('');
-    const [isError, setIsError] = useState(false);
+export default function SignUpPage (): ReactElement {
+    const {status,err} = useAppSelector((state) => state.auth);
+    const [userName, setUserName] = useState<string>('');
+    const [password, setPassword] = useState<string>('');
+    const [passwordConfirmed, setPasswordConfirmed] = useState<string>('');
+    const [isError, setIsError] = useState<boolean>(false);
     const navigate = useNavigate();
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
 
-    const onUserNameChange = (event) => {
+    const onUserNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setIsError(false)
         setUserName(event.target.value);
     }
 
-    const onPasswordChange = (event) => {
+    const onPasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setIsError(false)
         setPassword(event.target.value);
     }
 
-    const onPasswordConfirmedChange = (event) => {
+    const onPasswordConfirmedChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setIsError(false)
         setPasswordConfirmed(event.target.value);
     }
@@ -38,7 +38,7 @@ export default function SignUpPage () {
         }
     }, [status, navigate]);
 
-    const  handleSubmit =  (e) => {
+    const  handleSubmit =  () => {
         if(!userName || !password || (passwordConfirmed !== password) ) {
             setIsError(true);
             return;

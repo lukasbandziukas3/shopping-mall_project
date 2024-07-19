@@ -12,7 +12,7 @@ export function Form({ formType, productId, onClose }) {
   const dispatch = useDispatch();
 
   const onUpdateProduct = ({productData}) =>{
-    dispatch(productUpdated( { productId, productData}));
+    dispatch(productUpdated( {_id: productId, ...productData}));
   }
 
   const onSaveProduct = ({productData}) =>{

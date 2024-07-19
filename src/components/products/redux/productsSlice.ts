@@ -1,6 +1,13 @@
-import { createSlice } from "@reduxjs/toolkit";
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {BaseState, Category, Product} from "../../../interfaces/globalTypes";
 
-const initialState = {
+export interface ProductsState extends BaseState{
+  products:Product[] ,
+  searchText: string,
+  filters: Category[]
+}
+
+const initialState: ProductsState = {
   products: [],
   status: "idle",
   err: null,
@@ -12,7 +19,7 @@ const productsSlice = createSlice({
   name: "products",
   initialState,
   reducers: {
-    updateProductQuantity: (state, action) => {
+    updateProductQuantity: (state,  action: PayloadAction<{productId:string, quantityDef:number}>) => {
       const {productId, quantityDef} = action.payload;
       const existingProduct = state.products.find(
           (product) => product._id === productId
@@ -24,15 +31,15 @@ const productsSlice = createSlice({
     getRequest: (state) => {
       state.status = 'loading';
     },
-    getAllProductsSuccess: (state, action) => {
+    getAllProductsSuccess: (state, action: PayloadAction<Product[]>) => {
       state.status = "succeeded";
       state.products = action.payload;
     },
-    addProductSuccess: (state, action) => {
+    addProductSuccess: (state, action: PayloadAction<Product>) => {
       state.status = "succeeded";
       state.products.push(action.payload);
     },
-    updateProductSuccess: (state, action) => {
+    updateProductSuccess: (state, action: PayloadAction<Product>) => {
       state.status = "succeeded";
       const {_id, name, category, price, quantity} = action.payload;
       const existingProduct = state.products.find(
@@ -45,14 +52,14 @@ const productsSlice = createSlice({
         existingProduct.quantity = quantity;
       }
     },
-    getError: (state, action) => {
+    getError: (state, action: PayloadAction<string>) => {
       state.status = "failed";
       state.err = action.payload;
     },
-    setCategoryFilters(state, action) {
+    setCategoryFilters(state, action: PayloadAction<Category[]>) {
       state.filters = action.payload;
     },
-    setSearchText(state, action) {
+    setSearchText(state, action: PayloadAction<string>) {
       state.searchText = action.payload;
     }
   }

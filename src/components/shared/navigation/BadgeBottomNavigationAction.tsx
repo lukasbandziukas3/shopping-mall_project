@@ -1,9 +1,9 @@
 import Badge from "@mui/material/Badge";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
-import { useSelector } from "react-redux";
+import {useAppSelector} from "../../../hooks/reduxHooksTS";
 
 export const BadgeBottomNavigationAction = ({ ...props }) => {
-  const ordersInCartLength = useSelector((state) => state.cart.orders.length);
+  const ordersInCartLength = useAppSelector((state) => state.cart.orders.length);
   return (
     <Badge
       color="secondary"

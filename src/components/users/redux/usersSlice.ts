@@ -1,6 +1,11 @@
-import { createSlice } from "@reduxjs/toolkit";
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {BaseState, User} from "../../../interfaces/globalTypes";
 
-const initialState = {
+export interface UserState extends BaseState{
+    users: User[]
+}
+
+const initialState:UserState = {
     users: [],
     status: "idle",
     err: null,
@@ -13,11 +18,11 @@ const usersSlice = createSlice({
         getRequest: (state) => {
             state.status = 'loading';
         },
-        getAllUsersSuccess: (state, action) => {
+        getAllUsersSuccess: (state, action: PayloadAction<User[]>) => {
             state.status = "succeeded";
             state.users = action.payload;
         },
-        updateUserSuccess: (state, action) => {
+        updateUserSuccess: (state, action: PayloadAction<User>) => {
             state.status = "succeeded";
             const { _id, nickName, roles, activeStatus } = action.payload;
             const existingUser = state.users.find(
@@ -29,12 +34,12 @@ const usersSlice = createSlice({
                 existingUser.activeStatus = activeStatus;
             }
         },
-        deleteUserSuccess: (state, action) => {
+        deleteUserSuccess: (state, action: PayloadAction<{_id: string}>) => {
             state.status = "succeeded";
             const {_id} = action.payload;
             state.users = state.users.filter((user)=> user._id !== _id);
         },
-        getError: (state, action) => {
+        getError: (state, action: PayloadAction<string>) => {
             state.status = "failed";
             state.err = action.payload;
         },

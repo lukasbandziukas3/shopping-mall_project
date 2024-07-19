@@ -6,7 +6,7 @@ import {
 import { toast } from 'react-toastify';
 import {getAuthSuccess, getError, getLogoutSuccess, getRequest} from "./authSlice";
 import {jwtDecode} from "jwt-decode";
-import {Login, SingnUp, TokenInfo} from "../../../interfaces/globalTypes";
+import {Login, SingUp, TokenInfo} from "../../../interfaces/globalTypes";
 
 export const userLogin = createAsyncThunk(
     "auth/Login",
@@ -33,7 +33,7 @@ export const userLogin = createAsyncThunk(
 
 export const userSignUp = createAsyncThunk(
     "auth/SignUp",
-    async (userData: SingnUp, { dispatch }) => {
+    async (userData: SingUp, { dispatch }) => {
         dispatch(getRequest());
         try{
             const response = await signUp(userData);

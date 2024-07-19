@@ -3,10 +3,11 @@ import { getAllOrders, saveOrder } from "../../../services/orders";
 import { deleteOrder } from "../../cart/redux/cartSlice";
 import {toast} from "react-toastify";
 import {addOrderSuccess, getAllOrdersSuccess, getError, getRequest} from "./ordersSlice";
+import {Product} from "../../../interfaces/globalTypes";
 
 export const fetchOrders = createAsyncThunk(
     "orders/fetchOrders",
-    async (param, { dispatch, getState }) => {
+    async (_param, { dispatch }) => {
         dispatch(getRequest());
         try {
             const response = await getAllOrders();
@@ -15,14 +16,20 @@ export const fetchOrders = createAsyncThunk(
             }
         }
         catch (error) {
-            toast.warning(`${error}`, { autoClose: 2500 });
-            dispatch(getError(error));
+            if (typeof  error === "string") {
+                toast.warning(`${error}`, { autoClose: 2500 });
+                dispatch(getError(error));
+            }
+            else {
+                dispatch(getError("unknown error"));
+                console.error(error)
+            }
         }
     }
 );
 export const orderAdded = createAsyncThunk(
   "orders/orderAdded",
-  async (order, { dispatch }) => {
+  async (order: Pick<Product,"_id" | "quantity">[], { dispatch }) => {
       dispatch(getRequest());
       try {
           const response = await saveOrder(order);
@@ -33,9 +40,14 @@ export const orderAdded = createAsyncThunk(
           }
       }
       catch (error) {
-          toast.warning(`${error}`, { autoClose: 2500 });
-
-          dispatch(getError(error));
+          if (typeof  error === "string") {
+              toast.warning(`${error}`, {autoClose: 2500});
+              dispatch(getError(error));
+          }
+          else {
+                  dispatch(getError("unknown error"));
+                  console.error(error)
+              }
       }
   }
 );

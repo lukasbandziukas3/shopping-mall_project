@@ -1,12 +1,12 @@
 import api from "../config";
-import {Login, SingnUp} from "../interfaces/globalTypes";
+import {Login, SingUp} from "../interfaces/globalTypes";
 const ROUTE = "auth";
 
 export const sendLogin = async (userData: Login) => {
     return await api.post(`${ROUTE}`, userData);
 };
 
-export const signUp = async (userData: SingnUp) => {
+export const signUp = async (userData: SingUp) => {
     return await api.post(`${ROUTE}/signUp`, userData);
 }
 

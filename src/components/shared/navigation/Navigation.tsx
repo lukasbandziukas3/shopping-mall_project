@@ -9,21 +9,21 @@ import Person4Icon from '@mui/icons-material/Person4';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { useNavigate, useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
 import { BadgeBottomNavigationAction } from "./BadgeBottomNavigationAction";
-import {useSelector} from "react-redux";
+import {useAppSelector} from "../../../hooks/reduxHooksTS";
 
 export function NavigationPanel() {
   const navigate = useNavigate();
   const location = useLocation();
-  const [value, setValue] = useState();
-  const roles = useSelector(state => state.auth.roles )
+  const [value, setValue] = useState<string>('');
+  const roles = useAppSelector(state => state.auth.roles )
   useEffect(() => {
     setValue(location.pathname);
   }, [location.pathname]);
 
-  const handleChange = (event, newValue) => {
+  const handleChange = (_event: React.SyntheticEvent, newValue:string) => {
     setValue(newValue);
     navigate(newValue);
   };

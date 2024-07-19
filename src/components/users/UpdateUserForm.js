@@ -20,11 +20,11 @@ export function UpdateUserForm({ isOpen, onClose, userID }) {
             return;
         }
         dispatch(
-            userUpdated( {userID, userData:{
+            userUpdated( {
+                _id:userID,
                 nickName: userName,
                 roles: userRoles,
-                activeStatus: isActive,
-                    }
+                activeStatus: isActive
                 }
             ));
         onClose();

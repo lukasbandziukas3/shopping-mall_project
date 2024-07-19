@@ -10,10 +10,14 @@ import {
     getAllProductsSuccess, addProductSuccess, updateProductSuccess
 } from "./productsSlice";
 import {toast} from "react-toastify";
+import {RootState} from "../../../app/store";
+import {Product} from "../../../interfaces/globalTypes";
 
-export const fetchProducts = createAsyncThunk(
+
+
+export const fetchProducts = createAsyncThunk<void, void, {state: RootState }>(
   "products/fetchProducts",
-    async (param, { dispatch, getState }) => {
+    async (_param, { dispatch, getState})=> {
      dispatch(getRequest());
     try {
         const {filters, searchText} = getState().products;
@@ -24,15 +28,21 @@ export const fetchProducts = createAsyncThunk(
         }
     }
     catch (error) {
-        toast.warning(`${error}`, { autoClose: 2500 });
-        dispatch(getError(error));
+        if (typeof  error === "string") {
+            toast.warning(`${error}`, { autoClose: 2500 });
+            dispatch(getError(error));
+        }
+        else {
+            console.error(error);
+            dispatch(getError("unknown error"));
+        }
     }
   }
 );
 
 export const productAdded = createAsyncThunk (
   "products/productAdded",
-  async (product,{ dispatch, getState }) => {
+  async (product:Omit<Product,'_id'>,{ dispatch }) => {
       dispatch(getRequest());
       try {
           const response = await saveProduct(product);
@@ -42,27 +52,39 @@ export const productAdded = createAsyncThunk (
           }
       }
       catch (error) {
-          toast.warning(`${error}`, { autoClose: 2500 });
-          dispatch(getError(error));
+          if (typeof  error === "string") {
+              toast.warning(`${error}`, { autoClose: 2500 });
+              dispatch(getError(error));
+          }
+          else {
+              console.error(error);
+              dispatch(getError("unknown error"));
+          }
       }
   }
 );
 
 export const productUpdated = createAsyncThunk(
   "products/productUpdated",
-  async (product,{ dispatch, getState }) => {
+  async (product:Product,{ dispatch }) => {
       dispatch(getRequest());
       try {
-          const {productId, productData} = product;
-          const response = await updateProduct(productId, productData);
+          const {_id, ...productData} = product;
+          const response = await updateProduct(_id, productData);
           if (response) {
               dispatch(updateProductSuccess(response.data));
               toast.success(`Product was updated`, {autoClose: 2500});
           }
       }
       catch (error) {
-          toast.warning(`${error}`, { autoClose: 2500 });
-          dispatch(getError(error));
+          if (typeof  error === "string") {
+              toast.warning(`${error}`, {autoClose: 2500});
+              dispatch(getError(error));
+          }
+          else {
+              console.error(error)
+              dispatch(getError("unknown error"));
+          }
       }
   }
 );

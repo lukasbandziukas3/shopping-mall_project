@@ -1,6 +1,11 @@
-import { createSlice } from "@reduxjs/toolkit";
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {BaseState, Order} from "../../../interfaces/globalTypes";
 
-const initialState = {
+export interface OrderState extends BaseState{
+  orders: Order[]
+}
+
+const initialState: OrderState = {
   orders: [],
   status: "idle",
   err: null,
@@ -13,15 +18,15 @@ const ordersSlice = createSlice({
     getRequest: (state) => {
       state.status = 'loading';
     },
-    getAllOrdersSuccess: (state, action) => {
+    getAllOrdersSuccess: (state,  action: PayloadAction<Order[]>) => {
       state.status = "succeeded";
       state.orders = action.payload;
     },
-    addOrderSuccess: (state, action) => {
+    addOrderSuccess: (state, action: PayloadAction<Order>) => {
       state.status = "succeeded";
       state.orders.push(action.payload);
     },
-    getError: (state, action) => {
+    getError: (state, action: PayloadAction<string>) => {
       state.status = "failed";
       state.err = action.payload;
     },

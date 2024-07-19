@@ -1,6 +1,15 @@
-import {FormControl, FormHelperText, InputLabel, Select} from "@mui/material";
+import {FormControl, FormHelperText, InputLabel, Select, SelectChangeEvent} from "@mui/material";
+import React, {ReactNode} from "react";
 
-export function SelectorGeneral({ value, setValue,label, error, errorMessage,onChange,children }) {
+export function SelectorGeneral({ value, label, error, errorMessage,onChange,children }: {
+    value: string,
+    label: string,
+    error:boolean,
+    errorMessage:string,
+    onChange: (event: SelectChangeEvent<string>, child: ReactNode) => void
+    children: React.ReactNode;
+}
+) {
     return (
         <FormControl sx={{minWidth: 200}}>
             <InputLabel

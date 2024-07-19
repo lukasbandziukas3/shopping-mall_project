@@ -3,8 +3,9 @@ import {
     DialogTitle,
     DialogActions,
     Button,
-    Zoom,
+    Zoom, Breakpoint,
 } from "@mui/material";
+import {ReactNode} from "react";
 
 export function FormGeneral({
                                  isOpen = true,
@@ -13,8 +14,15 @@ export function FormGeneral({
                                  onSave,
                                  maxWidth,
                                  children,
+                             }:{
+                                isOpen?: boolean,
+                                onClose: () => void,
+                                formMessage: string,
+                                onSave: () => void,
+                                maxWidth: Breakpoint,
+                                children: ReactNode,
 
-                             }) {
+}){
     return (
         <Dialog
             maxWidth={maxWidth}

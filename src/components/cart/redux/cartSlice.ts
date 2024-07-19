@@ -1,6 +1,11 @@
-import { createSlice } from "@reduxjs/toolkit";
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {Product} from "../../../interfaces/globalTypes";
 
-const initialState = {
+export interface cartState {
+  orders: Product[]
+}
+
+const initialState:cartState = {
   orders: [],
 };
 
@@ -8,15 +13,15 @@ const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
-    deleteOrder(state, action) {
+    deleteOrder(state) {
       state.orders = [];
     },
-    addOrder(state, action) {
+    addOrder(state, action : PayloadAction<Product>) {
       const productExistInOrder = state.orders.find((order) => {
-        return order.productId === action.payload.productId;
+        return order._id === action.payload._id;
       });
       if (productExistInOrder) {
-        productExistInOrder.productQuantity += action.payload.productQuantity;
+        productExistInOrder.quantity += action.payload.quantity;
       } else {
         state.orders.push(action.payload);
       }

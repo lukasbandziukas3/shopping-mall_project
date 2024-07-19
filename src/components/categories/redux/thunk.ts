@@ -30,6 +30,7 @@ export const fetchCategories = createAsyncThunk(
                dispatch(getError(error ))
            }
            else {
+               dispatch(getError("unknown error"));
                console.error(error)
            }
         }
@@ -38,7 +39,7 @@ export const fetchCategories = createAsyncThunk(
 
 export const categoryAdded = createAsyncThunk (
     "categories/categoryAdded",
-    async (category:string,{ dispatch}) => {
+    async (category:Omit<Category,'_id'>,{ dispatch}) => {
         dispatch(getRequest());
         try {
             const response = await saveCategory(category);
@@ -53,6 +54,7 @@ export const categoryAdded = createAsyncThunk (
                 dispatch(getError(error));
             }
             else {
+                dispatch(getError("unknown error"));
                 console.error(error)
             }
         }
@@ -78,6 +80,7 @@ export const categoryUpdated = createAsyncThunk(
             }
             else {
                 console.error(error)
+                dispatch(getError("unknown error"));
             }
         }
     }
