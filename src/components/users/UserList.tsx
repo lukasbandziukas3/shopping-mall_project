@@ -1,20 +1,20 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import {UsersTable} from "./UserTable";
 import {UpdateUserForm} from "./UpdateUserForm";
 
 export function UsersList() {
-    const [isFormUpdateUserOpen, setIsFormUpdateUserOpen] = useState(false);
-    const [updateUserId, setUpdateUserId] = useState(null);
+    const [isFormUpdateUserOpen, setIsFormUpdateUserOpen] = useState<boolean>(false);
+    const [updateUserId, setUpdateUserId] = useState<string | null>(null);
 
-    const openFormUpdateUser = (e) => {
-        setUpdateUserId(e.target.getAttribute("data-user-id"));
-        console.log(updateUserId);
+    const openFormUpdateUser = (e:React.MouseEvent<HTMLButtonElement>) => {
+        setUpdateUserId((e.target as  HTMLButtonElement).getAttribute("data-user-id"));
         setIsFormUpdateUserOpen(true);
     }
 
     const closeFormUpdateCategory = () => {
         setIsFormUpdateUserOpen(false);
+        setUpdateUserId(null);
     };
 
     return (

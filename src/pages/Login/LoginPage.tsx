@@ -1,4 +1,4 @@
-import React, {ReactElement, useEffect, useState} from "react";
+import  {ChangeEvent, ReactElement, useEffect, useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
 import {CustomProgress} from "../../components/shared/CustomProgress";
 import {Button, Card, CardActions, CardContent, CardHeader} from "@mui/material";
@@ -15,12 +15,12 @@ export default function LoginPage (): ReactElement {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
 
-    const onUserNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const onUserNameChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setIsError(false)
         setUserName(event.target.value);
     }
 
-    const onPasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const onPasswordChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement >) => {
         setIsError(false)
         setPassword(event.target.value);
     }

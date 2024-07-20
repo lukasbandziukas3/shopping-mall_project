@@ -1,4 +1,3 @@
-import {useDispatch, useSelector} from "react-redux";
 import {
     Table,
     TableContainer,
@@ -9,13 +8,15 @@ import {
     Button,
 } from "@mui/material";
 import {userDeleted} from "./redux/thunk";
+import React from "react";
+import {useAppDispatch, useAppSelector} from "../../hooks/reduxHooksTS";
 
-export const UsersTable =({onUpdate}) => {
-    const dispatch = useDispatch();
-    const onDelete = (e) => {
-      dispatch(userDeleted(e.target.getAttribute("data-user-id")));
+export const UsersTable =({onUpdate}:{onUpdate:  (e:React.MouseEvent<HTMLButtonElement>)=> void }) => {
+    const dispatch = useAppDispatch();
+    const onDelete = (e: React.MouseEvent<HTMLButtonElement>) => {
+      dispatch(userDeleted((e.target as  HTMLButtonElement).getAttribute("data-user-id")!));
     }
-    const users = useSelector((state) => state.users.users);
+    const users = useAppSelector((state) => state.users.users);
     return (
         <TableContainer>
             <Table>

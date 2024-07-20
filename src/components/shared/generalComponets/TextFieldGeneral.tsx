@@ -7,7 +7,7 @@ export function TextFieldGeneral ({ value, onValueChange, label, errorMessage, e
     label: string,
     errorMessage: string,
     error: boolean,
-    type?: "text" | "number"
+    type?: "text" | "number" | "password"
 }) {
     return (
         <TextField

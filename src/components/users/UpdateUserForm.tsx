@@ -1,19 +1,20 @@
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, {ChangeEvent, useState} from "react";
 import { userUpdated} from "./redux/thunk";
 import {FormGeneral} from "../shared/generalComponets/FormGeneral";
 import {Autocomplete, TextField} from "@mui/material";
 import {TextFieldGeneral} from "../shared/generalComponets/TextFieldGeneral";
 import {CheckBoxGeneral} from "../shared/generalComponets/CheckBoxGeneral";
+import {useAppDispatch, useAppSelector} from "../../hooks/reduxHooksTS";
+import {Roles} from "../../interfaces/globalTypes";
 
-export function UpdateUserForm({ isOpen, onClose, userID }) {
-    const { nickName, activeStatus, roles} = useSelector((state) => state.users.users.find(user => user._id === userID));
-    const availableRoles = ["customer",'manager',"admin"]
-    const [userName, setUserName] = useState(nickName);
-    const [isActive, setIsActive] = useState(activeStatus);
-    const [ userRoles, setUserRoles ] = useState(roles)
+export function UpdateUserForm({ isOpen, onClose, userID }:{isOpen:boolean, onClose:() => void, userID: string | null}) {
+    const { nickName, activeStatus, roles} = useAppSelector((state) => state.users.users.find(user => user._id === userID))!;
+    const availableRoles: Roles[] = ["customer",'manager',"admin"]
+    const [userName, setUserName] = useState<string>(nickName);
+    const [isActive, setIsActive] = useState<boolean>(activeStatus);
+    const [ userRoles, setUserRoles ] = useState<Roles[]>(roles)
 
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const onUpdateUser = () => {
         if ( !nickName || userRoles.length === 0 ) {
@@ -21,7 +22,7 @@ export function UpdateUserForm({ isOpen, onClose, userID }) {
         }
         dispatch(
             userUpdated( {
-                _id:userID,
+                _id:userID!,
                 nickName: userName,
                 roles: userRoles,
                 activeStatus: isActive
@@ -30,7 +31,10 @@ export function UpdateUserForm({ isOpen, onClose, userID }) {
         onClose();
     };
 
-    const onRoleChange = (event, newValue) => {
+    const onUserNameChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        setUserName(event.target.value);
+    }
+    const onRoleChange = (_event: React.SyntheticEvent, newValue: Roles[]) => {
         setUserRoles(newValue);
     }
 
@@ -45,7 +49,7 @@ export function UpdateUserForm({ isOpen, onClose, userID }) {
            <CheckBoxGeneral  value={isActive} setValue={setIsActive} label='is active' />
             <TextFieldGeneral
                 value = {userName}
-                setValue = {setUserName}
+                onValueChange= {onUserNameChange}
                 label = "User name"
                 errorMessage = "User name could not be empty"
                 error = {userName.length === 0 }
