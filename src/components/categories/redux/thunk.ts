@@ -67,7 +67,7 @@ export const categoryUpdated = createAsyncThunk(
         dispatch(getRequest());
         try {
             const {_id, name} = category;
-            const response = await updateCategory(_id, name);
+            const response = await updateCategory(_id, {name});
             if (response) {
                 dispatch(updateCategorySuccess(response.data));
                 toast.success(`Category was updated`, {autoClose: 2500});

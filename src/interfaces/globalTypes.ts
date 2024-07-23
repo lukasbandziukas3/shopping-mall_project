@@ -20,7 +20,7 @@
 
  export interface Order {
      _id: string;
-     customer: User,
+     user: Pick<User,"nickName">,
      orderDate: Date,
      products: Product[],
  }
@@ -30,7 +30,14 @@
     name: string,
      quantity: number,
      price: number,
-     category: Category,
+ }
+
+ export interface ProductGet extends Product {
+     category: Category
+ }
+
+ export interface ProductSend extends Product {
+     category: string
  }
 
  export type Roles = 'customer'| 'manager' | 'admin'

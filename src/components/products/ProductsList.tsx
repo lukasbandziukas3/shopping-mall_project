@@ -1,22 +1,25 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import {Box, Button} from "@mui/material";
 
 import { ProductsTable } from "./ProductsTable";
 import { Form } from "./Form";
-import {useSelector} from "react-redux";
+import {useAppSelector} from "../../hooks/reduxHooksTS";
+
+export type FormType = "productForm" | "addProductToCart" | "";
 
 export function ProductsList() {
-  const roles = useSelector(state => state.auth.roles )
-  const [openFormName, setOpenFormName] = useState("");
-  const [currentProductId, setCurrentProductId] = useState(null);
+  const roles = useAppSelector(state => state.auth.roles )
+  const [openFormName, setOpenFormName] =
+         useState< "" | FormType >("");
+  const [currentProductId, setCurrentProductId] = useState<string | null>(null);
 
-  const openFormProduct = (e) => {
-      setCurrentProductId(e.target.getAttribute("data-product-id"));
+  const openFormProduct = (e:  React.MouseEvent<HTMLButtonElement>) => {
+      setCurrentProductId((e.target as HTMLButtonElement).getAttribute("data-product-id"));
       setOpenFormName("productForm");
   };
 
-  const openFormAddProductToCart = (e) => {
-    setCurrentProductId(e.target.getAttribute("data-product-id"));
+  const openFormAddProductToCart = (e: React.MouseEvent<HTMLButtonElement>) => {
+    setCurrentProductId((e.target as HTMLButtonElement).getAttribute("data-product-id"));
     setOpenFormName("addProductToCart");
   };
 

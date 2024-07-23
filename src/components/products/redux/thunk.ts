@@ -11,8 +11,7 @@ import {
 } from "./productsSlice";
 import {toast} from "react-toastify";
 import {RootState} from "../../../app/store";
-import {Product} from "../../../interfaces/globalTypes";
-
+import {ProductSend} from "../../../interfaces/globalTypes";
 
 
 export const fetchProducts = createAsyncThunk<void, void, {state: RootState }>(
@@ -42,7 +41,7 @@ export const fetchProducts = createAsyncThunk<void, void, {state: RootState }>(
 
 export const productAdded = createAsyncThunk (
   "products/productAdded",
-  async (product:Omit<Product,'_id'>,{ dispatch }) => {
+  async (product:Omit<ProductSend,'_id'>,{ dispatch }) => {
       dispatch(getRequest());
       try {
           const response = await saveProduct(product);
@@ -66,7 +65,7 @@ export const productAdded = createAsyncThunk (
 
 export const productUpdated = createAsyncThunk(
   "products/productUpdated",
-  async (product:Product,{ dispatch }) => {
+  async (product:ProductSend,{ dispatch }) => {
       dispatch(getRequest());
       try {
           const {_id, ...productData} = product;

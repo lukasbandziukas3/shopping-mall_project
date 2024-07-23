@@ -23,7 +23,7 @@ export const cancelOrderFromCart =  createAsyncThunk<void, void, {state: RootSta
 
 export const addedOrderToCart = createAsyncThunk(
   "cart/orderAddedTocart",
-  async (product:Product, { dispatch}) => {
+  async (product:Omit<Product, "category">, { dispatch}) => {
     dispatch(
       updateProductQuantity({
         productId: product._id,

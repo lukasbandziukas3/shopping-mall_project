@@ -1,4 +1,3 @@
-import { useSelector } from "react-redux";
 import {
   Table,
   TableContainer,
@@ -7,9 +6,10 @@ import {
   TableRow,
   TableCell,
 } from "@mui/material";
+import {useAppSelector} from "../../hooks/reduxHooksTS";
 
 export const CartTable = () => {
-  const productsInCart = useSelector((state) => state.cart.orders);
+  const productsInCart = useAppSelector((state) => state.cart.orders);
   return (
     <TableContainer>
       <Table>
@@ -28,11 +28,11 @@ export const CartTable = () => {
         </TableHead>
         <TableBody>
           {productsInCart.map((product) => (
-            <TableRow key={product.productId}>
-              <TableCell>{product.productName}</TableCell>
-              <TableCell>{product.productQuantity}</TableCell>
+            <TableRow key={product._id}>
+              <TableCell>{product.name}</TableCell>
+              <TableCell>{product.quantity}</TableCell>
               <TableCell>{product.price}</TableCell>
-              <TableCell>{product.productQuantity * product.price}</TableCell>
+              <TableCell>{product.quantity * product.price}</TableCell>
             </TableRow>
           ))}
           <TableRow>
@@ -42,7 +42,7 @@ export const CartTable = () => {
               {productsInCart.reduce(
                 (acamulator, currentOrder) =>
                   acamulator +
-                  currentOrder.price * currentOrder.productQuantity,
+                  currentOrder.price * currentOrder.quantity,
                 0
               )}
             </TableCell>

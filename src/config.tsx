@@ -1,7 +1,21 @@
-import axios from "axios";
+import axios, {AxiosError, AxiosResponse, InternalAxiosRequestConfig} from "axios";
 import { sendRefreshToken} from "./services/auth";
 
-const refreshAndRetryQueue = [];
+interface RequestInstance {
+  config: InternalAxiosRequestConfig,
+  resolve: any,
+  reject: any,
+}
+
+interface ErrorResponse {
+  error: string;
+}
+
+interface RefreshTokenResponse {
+  accessToken: string;
+}
+
+const refreshAndRetryQueue: RequestInstance[] = [];
 let isRefreshing = false;
 
 export const options = {
@@ -27,19 +41,24 @@ apiInstance.interceptors.request.use(async (config) => {
 
 apiInstance.interceptors.response.use(async (response) => {
     return response;
-},async (err)=>{
+},async (err:AxiosError)=>{
   if(err.response?.status === 401){
+
     if(err.request.responseURL.includes("refresh")){
       localStorage.removeItem("jwtToken");
-      err.response.data.message = "Your login has expired";
-      window.location = "/authorization";
+      (err.response.data as ErrorResponse).error = "Your login has expired";
+      window.location.href = "/authorization";
       return Promise.reject(err);
     }
-    const originalRequest = err.config;
-    if(!isRefreshing) {
+    const originalRequest: InternalAxiosRequestConfig | undefined = err.config;
+    if(!originalRequest){
+      return;
+    }
+    if(!isRefreshing ) {
+      console.log(originalRequest,"request");
       isRefreshing = true;
       try {
-        const response = await sendRefreshToken();
+        const response: AxiosResponse<RefreshTokenResponse> = await sendRefreshToken();
         if (response?.data) {
           localStorage.setItem("jwtToken", response.data.accessToken);
           refreshAndRetryQueue.forEach(({ config, resolve, reject }) => {
@@ -56,13 +75,13 @@ apiInstance.interceptors.response.use(async (response) => {
       }
       finally {
         isRefreshing = false;
-      }
+        }
       }
       return new Promise((resolve, reject) => {
         refreshAndRetryQueue.push({ config: originalRequest, resolve, reject });
       });
     }
-  return Promise.reject(err.response?.data.error);
+  return Promise.reject((err.response?.data as ErrorResponse).error);
   });
 
 export default apiInstance;
