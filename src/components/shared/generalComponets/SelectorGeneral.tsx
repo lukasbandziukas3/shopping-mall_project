@@ -1,12 +1,12 @@
 import {FormControl, FormHelperText, InputLabel, Select, SelectChangeEvent} from "@mui/material";
-import React, {ReactNode} from "react";
+import React from "react";
 
 export function SelectorGeneral({ value, label, error, errorMessage,onChange,children }: {
     value: string,
     label: string,
     error:boolean,
     errorMessage:string,
-    onChange: (event: SelectChangeEvent<string>, child: ReactNode) => void
+    onChange: (event: SelectChangeEvent<string>) => void
     children: React.ReactNode;
 }
 ) {

@@ -7,4 +7,7 @@ export default function Logout ()  {
     useEffect( () => {
          dispatch(userLogout());
     }, [ dispatch]);
+    return (
+        <>logout</>
+    )
 };

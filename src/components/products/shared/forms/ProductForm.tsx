@@ -1,31 +1,33 @@
-import { useState } from "react";
-import { useSelector } from "react-redux";
+import {ChangeEvent, useState} from "react";
 import { isAllFieldsInProductCorrect } from "../../helpers/helpers";
 import {FormGeneral} from "../../../shared/generalComponets/FormGeneral";
 import {TextFieldGeneral} from "../../../shared/generalComponets/TextFieldGeneral";
-import {MenuItem} from "@mui/material";
+import {MenuItem, SelectChangeEvent} from "@mui/material";
 import {SelectorGeneral} from "../../../shared/generalComponets/SelectorGeneral";
+import {useAppSelector} from "../../../../hooks/reduxHooksTS";
+import {ProductGet, ProductSend} from "../../../../interfaces/globalTypes";
 
-export function ProductForm({ onClose, product, submitProduct,formMessage }) {
-  const catagories = useSelector((state) => state.categories.categories);
+export function ProductForm({ onClose, product, submitProduct,formMessage }:
+  { onClose: () => void, product: ProductGet | undefined, submitProduct: (product: Omit <ProductSend,'_id'>)  => void, formMessage: string }) {
+  const categories = useAppSelector((state) => state.categories.categories);
   const [name, setName] = useState(product?.name || '');
   const [quantity, setQuantity] = useState(product?.quantity || 0 );
   const [price, setPrice] = useState(product?.price || 0);
   const [categoryID, setCategoryID] = useState(product?.category._id || '');
 
-  const onProductNameChange = (event) => {
+  const onProductNameChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setName(event.target.value);
   }
 
-  const onPriceChange = (event) => {
-        setPrice(event.target.value);
+  const onPriceChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        setPrice(Number(event.target.value));
   }
 
-  const onQuantityChange = (event) => {
-        setQuantity(event.target.value);
+  const onQuantityChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        setQuantity(Number(event.target.value));
   }
 
-  const onCategoryChange = (event) => {
+  const onCategoryChange = (event:SelectChangeEvent<string>) => {
        setCategoryID(event.target.value);
   }
 
@@ -39,12 +41,11 @@ export function ProductForm({ onClose, product, submitProduct,formMessage }) {
     if (errMsg) {
       return;
     }
-    submitProduct ({productData: {
+    submitProduct ( {
               name,
               category: categoryID,
               price,
               quantity,
-          }
     });
     onClose();
   };
@@ -64,13 +65,12 @@ export function ProductForm({ onClose, product, submitProduct,formMessage }) {
           />
           <SelectorGeneral
               value={categoryID}
-              setValue={setCategoryID}
               label = "Select category"
               error={!categoryID}
               errorMessage = 'Select category of product'
               onChange={onCategoryChange}
           >
-              {catagories.map((category) => (
+              {categories.map((category) => (
                   <MenuItem key={category._id} value={category._id}>
                       {category.name}
                   </MenuItem>

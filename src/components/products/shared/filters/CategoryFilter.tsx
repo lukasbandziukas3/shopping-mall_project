@@ -1,13 +1,15 @@
-import {useDispatch, useSelector} from "react-redux";
 import {Autocomplete, TextField} from "@mui/material";
 
 import {setCategoryFilters} from "../../redux/productsSlice";
+import {useAppDispatch, useAppSelector} from "../../../../hooks/reduxHooksTS";
+import React from "react";
+import {Category} from "../../../../interfaces/globalTypes";
 
 export const  CategoryFilter = () => {
-    const categories = useSelector((state) => state.categories.categories);
-    const filters = useSelector((state) => state.products.filters);
-    const dispatch= useDispatch();
-    const onFilterChange = (event, newValue) => {
+    const categories = useAppSelector((state) => state.categories.categories);
+    const filters = useAppSelector((state) => state.products.filters);
+    const dispatch= useAppDispatch();
+    const onFilterChange = (_event:  React.SyntheticEvent, newValue: Category[]) => {
         dispatch(setCategoryFilters(newValue));
     }
     return (

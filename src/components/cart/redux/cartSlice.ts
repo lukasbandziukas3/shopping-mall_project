@@ -2,7 +2,7 @@ import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {Product} from "../../../interfaces/globalTypes";
 
 export interface cartState {
-  orders: Product[]
+  orders: Omit<Product,"category">[]
 }
 
 const initialState:cartState = {
@@ -16,7 +16,7 @@ const cartSlice = createSlice({
     deleteOrder(state) {
       state.orders = [];
     },
-    addOrder(state, action : PayloadAction<Product>) {
+    addOrder(state, action : PayloadAction<Omit<Product,"category">>) {
       const productExistInOrder = state.orders.find((order) => {
         return order._id === action.payload._id;
       });

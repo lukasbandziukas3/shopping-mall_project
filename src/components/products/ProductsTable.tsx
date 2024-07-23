@@ -1,5 +1,4 @@
-import {memo} from "react";
-import { useSelector } from "react-redux";
+import React, {memo} from "react";
 import {
   Table,
   TableContainer,
@@ -9,10 +8,15 @@ import {
   TableCell,
   Button,
 } from "@mui/material";
+import {useAppSelector} from "../../hooks/reduxHooksTS";
 
-export const ProductsTable = memo(({ onProductUpdate, onProductBuy }) => {
-  const products = useSelector((state) => state.products.products);
-  const roles = useSelector(state => state.auth.roles )
+export const ProductsTable = memo(({ onProductUpdate, onProductBuy }:
+  {
+    onProductUpdate: (e: React.MouseEvent<HTMLButtonElement>) => void,
+    onProductBuy :(e:  React.MouseEvent<HTMLButtonElement>)=> void })  =>
+    {
+  const products = useAppSelector((state) => state.products.products);
+  const roles = useAppSelector(state => state.auth.roles )
   return (
     <TableContainer>
       <Table>

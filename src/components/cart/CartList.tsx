@@ -1,14 +1,13 @@
 import { Button } from "@mui/material";
 import Typography from "@mui/material/Typography";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
 
 import { cancelOrderFromCart, makePurchase } from "./redux/thunks";
 import { CartTable } from "./CartTable";
+import {useAppDispatch, useAppSelector} from "../../hooks/reduxHooksTS";
 
 export function CartList() {
-  const productsInCartLength = useSelector((state) => state.cart.orders.length);
-  const dispatch = useDispatch();
+  const productsInCartLength = useAppSelector((state) => state.cart.orders.length);
+  const dispatch = useAppDispatch();
 
   const onBuy = () => {
     dispatch(makePurchase());

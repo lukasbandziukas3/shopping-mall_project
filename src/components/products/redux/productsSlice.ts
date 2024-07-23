@@ -1,8 +1,8 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {BaseState, Category, Product} from "../../../interfaces/globalTypes";
+import {BaseState, Category, ProductGet,} from "../../../interfaces/globalTypes";
 
 export interface ProductsState extends BaseState{
-  products:Product[] ,
+  products:ProductGet[] ,
   searchText: string,
   filters: Category[]
 }
@@ -31,15 +31,15 @@ const productsSlice = createSlice({
     getRequest: (state) => {
       state.status = 'loading';
     },
-    getAllProductsSuccess: (state, action: PayloadAction<Product[]>) => {
+    getAllProductsSuccess: (state, action: PayloadAction<ProductGet[]>) => {
       state.status = "succeeded";
       state.products = action.payload;
     },
-    addProductSuccess: (state, action: PayloadAction<Product>) => {
+    addProductSuccess: (state, action: PayloadAction<ProductGet>) => {
       state.status = "succeeded";
       state.products.push(action.payload);
     },
-    updateProductSuccess: (state, action: PayloadAction<Product>) => {
+    updateProductSuccess: (state, action: PayloadAction<ProductGet>) => {
       state.status = "succeeded";
       const {_id, name, category, price, quantity} = action.payload;
       const existingProduct = state.products.find(

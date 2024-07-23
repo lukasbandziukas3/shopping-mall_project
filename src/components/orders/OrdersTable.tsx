@@ -1,4 +1,3 @@
-import { useSelector } from "react-redux";
 import {
   Table,
   TableContainer,
@@ -7,9 +6,10 @@ import {
   TableRow,
   TableCell,
 } from "@mui/material";
+import {useAppSelector} from "../../hooks/reduxHooksTS";
 
 export const OrdersTable = () => {
-  const orders = useSelector((state) => state.orders.orders);
+  const orders = useAppSelector((state) => state.orders.orders);
 
   return (
     <TableContainer>
@@ -23,14 +23,14 @@ export const OrdersTable = () => {
           <TableRow sx={{ display: "flex" }}>
             <TableCell sx={{ flex: 1 }}>Customer</TableCell>
             <TableCell sx={{ flex: 1 }}>Purchase date </TableCell>
-            <TableCell sx={{ flex: 1 }}>Tottal price</TableCell>
+            <TableCell sx={{ flex: 1 }}>Total price</TableCell>
             <TableCell sx={{ flex: 2 }}>Products</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {orders.map((order) => (
             <TableRow key={order._id} sx={{ display: "flex" }}>
-              <TableCell sx={{ flex: 1 }}>{order.customer.nickName}</TableCell>
+              <TableCell sx={{ flex: 1 }}>{order.user?.nickName}</TableCell>
               <TableCell sx={{ flex: 1 }}>
                 {order.orderDate.toLocaleString()}
               </TableCell>

@@ -1,16 +1,16 @@
 import Input from '@mui/material/Input';
 import InputAdornment from '@mui/material/InputAdornment';
 import SearchIcon from '@mui/icons-material/Search';
-import {useDispatch, useSelector} from "react-redux";
 import {setSearchText} from "../../redux/productsSlice";
 import {fetchProducts} from "../../redux/thunk";
-import {useLayoutEffect, useRef} from "react";
+import React, {useLayoutEffect, useRef} from "react";
+import {useAppDispatch, useAppSelector} from "../../../../hooks/reduxHooksTS";
 
 export const  ProductSearch = ( )  => {
-   const dispatch = useDispatch();
-    const productSearchText = useSelector((state) => state.products.searchText);
-   const InitValue = useRef(productSearchText);
+   const dispatch = useAppDispatch();
 
+   const productSearchText = useAppSelector((state) => state.products.searchText);
+   const InitValue = useRef(productSearchText);
     useLayoutEffect(() => {
        if (InitValue.current === productSearchText) {
            return;
@@ -21,7 +21,7 @@ export const  ProductSearch = ( )  => {
         return () => clearTimeout(timoutId)
     }, [productSearchText, dispatch])
 
-   const onChange = (e) => {
+   const onChange = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement> ) => {
        dispatch(setSearchText(e.target.value));
    }
     return (

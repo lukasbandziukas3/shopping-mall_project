@@ -4,7 +4,6 @@ import React from "react";
 export default function ErrorPage(): React.ReactElement {
     const error : unknown= useRouteError();
     let errorMessage: string ;
-
     if (isRouteErrorResponse(error)) {
         errorMessage = error.data?.message || error.statusText;
     } else if (error instanceof Error) {
